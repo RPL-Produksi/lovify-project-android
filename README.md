@@ -1,3 +1,2 @@
-# lovify_android
-
-A new Flutter project.
+# Lovify Mobile
+yeah
