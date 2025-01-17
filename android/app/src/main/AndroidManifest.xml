@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:fullBackupContent="@xml/backup_rules"
-        android:label="Lovify Android Beta"
+        android:label="Lovify"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
@@ -48,7 +48,7 @@
     <queries>
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
-            <data android:mimeType="text/plain"/>
+            <data />
         </intent>
     </queries>
 </manifest>
