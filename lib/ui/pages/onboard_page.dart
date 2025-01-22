@@ -1,6 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lovify_android/configs/app_colors.dart';
+import 'package:lovify_android/ui/widgets/primary_button.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnBoardPage extends StatefulWidget {
@@ -42,10 +45,15 @@ class _OnBoardPageState extends State<OnBoardPage> {
               items: [
                 Column(
                   children: [
-                    Text("Plan Your Perfect Day",
-                        style: GoogleFonts.charm(
-                            textStyle: TextStyle(
-                                fontSize: 32, fontWeight: FontWeight.bold))),
+                    Text(
+                      "Plan Your Perfect Day",
+                      style: GoogleFonts.charm(
+                        textStyle: TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
                     SizedBox(
                       height: 12,
                     ),
@@ -53,16 +61,24 @@ class _OnBoardPageState extends State<OnBoardPage> {
                       "Planning your wedding doesn’t have to be overwhelming. Let us help you create the celebration of your dreams.",
                       textAlign: TextAlign.center,
                       style: GoogleFonts.plusJakartaSans(
-                          textStyle: TextStyle(fontSize: 18)),
+                        textStyle: TextStyle(
+                          fontSize: 18,
+                        ),
+                      ),
                     ),
                   ],
                 ),
                 Column(
                   children: [
-                    Text("Customize & Personalize",
-                        style: GoogleFonts.charm(
-                            textStyle: TextStyle(
-                                fontSize: 32, fontWeight: FontWeight.bold))),
+                    Text(
+                      "Customize & Personalize",
+                      style: GoogleFonts.charm(
+                        textStyle: TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
                     SizedBox(
                       height: 12,
                     ),
@@ -70,16 +86,24 @@ class _OnBoardPageState extends State<OnBoardPage> {
                       "Your wedding, your way. Our platform allows you to customize every detail, from color themes to ceremony setups. ",
                       textAlign: TextAlign.center,
                       style: GoogleFonts.plusJakartaSans(
-                          textStyle: TextStyle(fontSize: 18)),
+                        textStyle: TextStyle(
+                          fontSize: 18,
+                        ),
+                      ),
                     ),
                   ],
                 ),
                 Column(
                   children: [
-                    Text("Get Started Today",
-                        style: GoogleFonts.charm(
-                            textStyle: TextStyle(
-                                fontSize: 32, fontWeight: FontWeight.bold))),
+                    Text(
+                      "Get Started Today",
+                      style: GoogleFonts.charm(
+                        textStyle: TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
                     SizedBox(
                       height: 12,
                     ),
@@ -87,7 +111,10 @@ class _OnBoardPageState extends State<OnBoardPage> {
                       "Whether you're envisioning an intimate gathering or a grand celebration.",
                       textAlign: TextAlign.center,
                       style: GoogleFonts.plusJakartaSans(
-                          textStyle: TextStyle(fontSize: 18)),
+                        textStyle: TextStyle(
+                          fontSize: 18,
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -116,11 +143,12 @@ class _OnBoardPageState extends State<OnBoardPage> {
               activeIndex: _currentPage, // The controller used by the carousel
               count: 3, // Number of pages
               effect: ExpandingDotsEffect(
-                  dotHeight: 8.0,
-                  dotWidth: 14.0,
-                  spacing: 8.0,
-                  dotColor: const Color.fromARGB(255, 212, 212, 212),
-                  activeDotColor: const Color(0xFF67191F)),
+                dotHeight: 8.0,
+                dotWidth: 14.0,
+                spacing: 8.0,
+                dotColor: const Color.fromARGB(255, 212, 212, 212),
+                activeDotColor: const Color(0xFF67191F),
+              ),
             ),
           ),
           SizedBox(
@@ -130,78 +158,32 @@ class _OnBoardPageState extends State<OnBoardPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              MainButton(
+              PrimaryButton(
                 text: "Sign In",
-                onPressed: () {},
+                onPressed: () {
+                  context.push('/login');
+                },
               ),
               SizedBox(
                 width: 18,
               ),
-              MainButton(
+              PrimaryButton(
                 text: "Next",
                 onPressed: () {
                   if (_currentPage != 2) {
                     _carouselController.nextPage(
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.linearToEaseOut
-                    );
+                        duration: Duration(milliseconds: 300),
+                        curve: Curves.linearToEaseOut);
+                  } else {
+                    context.push('/login');
                   }
                 },
-                backgroundColor: Color(0xFF67191F),
+                backgroundColor: AppColors.deepRed,
                 textColor: Colors.white,
               ),
             ],
           ),
         ],
-      ),
-    );
-  }
-}
-
-class MainButton extends StatelessWidget {
-  final String text;
-  final VoidCallback onPressed;
-  final double width;
-  final double height;
-  final Color backgroundColor;
-  final Color textColor;
-  final double fontSize;
-
-  const MainButton({
-    Key? key,
-    required this.text,
-    required this.onPressed,
-    this.width = 132,
-    this.height = 38,
-    this.backgroundColor = const Color.fromARGB(255, 246, 244, 240),
-    this.textColor = const Color(0xFF67191F),
-    this.fontSize = 16,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      style: TextButton.styleFrom(
-        backgroundColor: backgroundColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-      ),
-      onPressed: onPressed,
-      child: SizedBox(
-        width: width,
-        height: height,
-        child: Center(
-          child: Text(
-            text,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: textColor,
-              fontWeight: FontWeight.bold,
-              fontSize: fontSize,
-            ),
-          ),
-        ),
       ),
     );
   }
