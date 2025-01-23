@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
-import 'package:lovify_android/ui/pages/auth/login_page.dart';
+import 'package:lovify_android/ui/pages/auth/login/login_page.dart';
+import 'package:lovify_android/ui/pages/auth/register/register_page.dart';
 import 'package:lovify_android/ui/pages/onboard_page.dart';
 
 import '../ui/pages/launch_page.dart';
@@ -28,6 +29,11 @@ class AppRoute {
           path: '/login',
           name: 'login',
           builder: (context, state) => const LoginPage(),
+        ),
+        GoRoute(
+          path: '/register',
+          name: 'register',
+          builder: (context, state) => const RegisterPage(),
         ),
       ];
 }

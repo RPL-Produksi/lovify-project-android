@@ -15,7 +15,8 @@ class AppTheme {
         centerTitle: true,
         backgroundColor: Colors.transparent,
       ),
-      fontFamily: GoogleFonts.poppins().fontFamily,
+      fontFamily: GoogleFonts.plusJakartaSans().fontFamily,
+      
     );
   }
 }
