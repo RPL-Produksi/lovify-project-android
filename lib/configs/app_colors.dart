@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const deepRed = Color(0xFF9A2143);
+  static const deepRed = Color(0xFF67191F);
   static const palePink = Color(0xFFFBD1C6);
   static const spaceCadet = Color(0xFF1E2742);
   static const lightCoral = Color(0xFFFFBBA8);
