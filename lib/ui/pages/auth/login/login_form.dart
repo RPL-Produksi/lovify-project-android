@@ -98,7 +98,7 @@ class _LoginFormState extends State<LoginForm> {
                   textStyle: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF67191F),
+                    color: AppColors.deepRed,
                   ),
                 ),
               ),
@@ -139,7 +139,7 @@ class _LoginFormState extends State<LoginForm> {
                   textStyle: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
-                    color: Color(0xFF67191F),
+                    color: AppColors.deepRed,
                   ),
                 ),
               ),

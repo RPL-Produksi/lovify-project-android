@@ -16,7 +16,6 @@ class AppTheme {
         backgroundColor: Colors.transparent,
       ),
       fontFamily: GoogleFonts.plusJakartaSans().fontFamily,
-      
     );
   }
 }
