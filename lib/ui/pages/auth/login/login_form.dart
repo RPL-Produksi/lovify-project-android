@@ -12,7 +12,27 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+  String? _emailError;
+  String? _passwordError;
+
+  bool _isLoading = false;
+
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final FocusNode _emailFocus = FocusNode();
+  final FocusNode _passwordFocus = FocusNode();
+
   bool _isPasswordVisible = false;
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _emailFocus.dispose();
+    _passwordFocus.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -30,11 +50,17 @@ class _LoginFormState extends State<LoginForm> {
           height: 4,
         ),
         TextField(
+          keyboardType: TextInputType.emailAddress,
+          autocorrect: false,
+          controller: _emailController,
+          focusNode: _emailFocus,
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
             ),
             hintText: 'Email Address',
+            errorText: _emailError,
+            errorStyle: TextStyle(fontSize: 10),
             prefixIcon: Icon(Icons.email_rounded),
             hintStyle: GoogleFonts.plusJakartaSans(
               textStyle: TextStyle(
@@ -58,12 +84,18 @@ class _LoginFormState extends State<LoginForm> {
           height: 4,
         ),
         TextField(
+          controller: _passwordController,
           obscureText: !_isPasswordVisible,
+          focusNode: _passwordFocus,
+          textInputAction: TextInputAction.done,
+          onSubmitted: (_) => validateAndSubmit(),
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
             ),
             hintText: 'Password',
+            errorText: _passwordError,
+            errorStyle: TextStyle(fontSize: 10),
             prefixIcon: Icon(Icons.key_rounded),
             suffixIcon: IconButton(
               onPressed: () {
@@ -98,7 +130,7 @@ class _LoginFormState extends State<LoginForm> {
                   textStyle: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF67191F),
+                    color: AppColors.deepRed,
                   ),
                 ),
               ),
@@ -109,8 +141,12 @@ class _LoginFormState extends State<LoginForm> {
           height: 32,
         ),
         PrimaryButton(
-          text: "Sign In",
-          onPressed: () {},
+          text: _isLoading ? "Signing In...." : "Sign In",
+          onPressed: () {
+            if (_isLoading == false) {
+              validateAndSubmit();
+            }
+          },
           backgroundColor: AppColors.deepRed,
           textColor: Colors.white,
           width: double.infinity,
@@ -131,7 +167,7 @@ class _LoginFormState extends State<LoginForm> {
             ),
             InkWell(
               onTap: () {
-                context.go('/register');
+                context.push('/register');
               },
               child: Text(
                 "Sign up",
@@ -149,4 +185,48 @@ class _LoginFormState extends State<LoginForm> {
       ],
     );
   }
+
+  void validateAndSubmit() async {
+    setState(() {
+      _emailError = _emailController.text.isEmpty
+          ? "Please enter your email to continue"
+          : (!isValidEmail(_emailController.text)
+              ? "Make sure your email is correct (e.g., name@example.com)"
+              : null);
+
+      _passwordError = _passwordController.text.isEmpty
+          ? "Please enter your password"
+          : (_passwordController.text.length < 6
+              ? "Your password should be at least 6 characters long"
+              : null);
+    });
+
+    if (_emailError != null) {
+      FocusScope.of(context).requestFocus(_emailFocus);
+      return;
+    }
+
+    if (_passwordError != null) {
+      FocusScope.of(context).requestFocus(_passwordFocus);
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    //ini loading ceritanya :)
+    await Future.delayed(Duration(seconds: 2));
+
+    setState(() {
+      _isLoading = false;
+    });
+
+    context.go('/home');
+  }
+}
+
+bool isValidEmail(String email) {
+  final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+  return emailRegex.hasMatch(email);
 }
