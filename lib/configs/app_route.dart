@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:lovify_android/ui/pages/auth/login/login_page.dart';
 import 'package:lovify_android/ui/pages/auth/register/register_page.dart';
+import 'package:lovify_android/ui/pages/home_page.dart';
 import 'package:lovify_android/ui/pages/onboard_page.dart';
 
 import '../ui/pages/launch_page.dart';
@@ -35,5 +36,10 @@ class AppRoute {
           name: 'register',
           builder: (context, state) => const RegisterPage(),
         ),
+        GoRoute(
+          path: '/home',
+          name: 'home',
+          builder: (context, state) => const HomePage(),
+        )
       ];
 }
