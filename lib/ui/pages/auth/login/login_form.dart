@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -43,11 +44,16 @@ class _LoginFormState extends State<LoginForm> {
         listener: (context, state) {
           if (state is LoginSuccess) {
             context.go('/home');
+            // TODO: simpan token ke local
           }
           if (state is LoginError) {
+            // TODO: Respon jika login gagal/error di sini
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(state.respond.message),
+                content: Text(
+                  state.respond.message,
+                  textAlign: TextAlign.center,
+                ),
                 backgroundColor: AppColors.deepRed,
               ),
             );
@@ -220,7 +226,7 @@ class _LoginFormState extends State<LoginForm> {
     setState(() {
       _emailError = _emailController.text.isEmpty
           ? "Please enter your email to continue"
-          : (!isValidEmail(_emailController.text)
+          : (!EmailValidator.validate(_emailController.text.trim())
               ? "Make sure your email is correct (e.g., name@example.com)"
               : null);
 
@@ -259,9 +265,4 @@ class _LoginFormState extends State<LoginForm> {
 
     // context.go('/home');
   }
-}
-
-bool isValidEmail(String email) {
-  final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
-  return emailRegex.hasMatch(email);
 }

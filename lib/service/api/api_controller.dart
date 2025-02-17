@@ -12,7 +12,7 @@ class ApiController {
       baseUrl: "$baseUrl/api/v1/",
       contentType: Headers.jsonContentType,
       responseType: ResponseType.json,
-      headers: {"Accept": "jsonContentType"},
+      headers: {"Accept": "application/json"},
       connectTimeout: const Duration(seconds: 60),
       receiveTimeout: const Duration(seconds: 60),
       sendTimeout: const Duration(seconds: 60),

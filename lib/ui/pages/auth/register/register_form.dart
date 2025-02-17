@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lovify_android/configs/app_colors.dart';
+import 'package:lovify_android/cubits/auth_cubit/auth_cubit.dart';
 import 'package:lovify_android/ui/widgets/primary_button.dart';
 
 class RegisterForm extends StatefulWidget {
@@ -28,227 +30,259 @@ class _RegisterFormState extends State<RegisterForm> {
   bool _isPasswordVisible = false;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Full Name",
-          style: GoogleFonts.plusJakartaSans(
-            textStyle: TextStyle(
-              fontSize: 14,
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 4,
-        ),
-        TextField(
-          controller: _fullNameController,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            hintText: 'Full Name',
-            errorText: _fullNameError,
-            prefixIcon: Icon(Icons.person),
-            hintStyle: GoogleFonts.plusJakartaSans(
-              textStyle: TextStyle(
-                fontSize: 14,
-              ),
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 16,
-        ),
-        Text(
-          "Username",
-          style: GoogleFonts.plusJakartaSans(
-            textStyle: TextStyle(
-              fontSize: 14,
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 4,
-        ),
-        TextField(
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            hintText: 'Username',
-            errorText: _usernameError,
-            prefixIcon: Icon(Icons.account_circle_rounded),
-            hintStyle: GoogleFonts.plusJakartaSans(
-              textStyle: TextStyle(
-                fontSize: 14,
-              ),
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 16,
-        ),
-        Text(
-          "Phone Number",
-          style: GoogleFonts.plusJakartaSans(
-            textStyle: TextStyle(
-              fontSize: 14,
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 4,
-        ),
-        TextField(
-          controller: _phoneController,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            hintText: 'Phone Number',
-            prefixIcon: Icon(
-              Icons.phone,
-            ),
-            errorText: _phoneError,
-            hintStyle: GoogleFonts.plusJakartaSans(
-              textStyle: TextStyle(
-                fontSize: 14,
-              ),
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 16,
-        ),
-        Text(
-          "Password",
-          style: GoogleFonts.plusJakartaSans(
-            textStyle: TextStyle(
-              fontSize: 14,
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 4,
-        ),
-        TextField(
-          controller: _passwordController,
-          obscureText: !_isPasswordVisible,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            hintText: 'Password',
-            errorText: _passwordError,
-            prefixIcon: Icon(Icons.key_rounded),
-            suffixIcon: IconButton(
-              onPressed: () {
-                setState(() {
-                  _isPasswordVisible = !_isPasswordVisible;
-                });
-              },
-              icon: Icon(
-                _isPasswordVisible
-                    ? Icons.visibility_rounded
-                    : Icons.visibility_off_rounded,
-              ),
-            ),
-            hintStyle: GoogleFonts.plusJakartaSans(
-              textStyle: TextStyle(
-                fontSize: 14,
-              ),
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 16,
-        ),
-        Text(
-          "Password Confirmation",
-          style: GoogleFonts.plusJakartaSans(
-            textStyle: TextStyle(
-              fontSize: 14,
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 4,
-        ),
-        TextField(
-          controller: _passwordConfirmController,
-          obscureText: !_isPasswordVisible,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            hintText: 'Password Confirmation',
-            errorText: _passwordConfirmError,
-            prefixIcon: Icon(Icons.key_rounded),
-            suffixIcon: IconButton(
-              onPressed: () {
-                setState(() {
-                  _isPasswordVisible = !_isPasswordVisible;
-                });
-              },
-              icon: Icon(
-                _isPasswordVisible
-                    ? Icons.visibility_rounded
-                    : Icons.visibility_off_rounded,
-              ),
-            ),
-            hintStyle: GoogleFonts.plusJakartaSans(
-              textStyle: TextStyle(
-                fontSize: 14,
-              ),
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 32,
-        ),
-        PrimaryButton(
-          text: "Sign Up",
-          onPressed: () {
-            validateAndSubmit();
-          },
-          backgroundColor: AppColors.deepRed,
-          textColor: Colors.white,
-          width: double.infinity,
-        ),
-        SizedBox(
-          height: 12,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Already have an account? ",
-              style: GoogleFonts.plusJakartaSans(
-                textStyle: TextStyle(
-                  fontSize: 14,
+    return BlocProvider(
+      create: (context) => AuthCubit(),
+      child: BlocConsumer<AuthCubit, AuthState>(
+        listener: (context, state) {
+          if (state is RegisterSuccess) {
+            context.go('/home');
+            // TODO: simpan token ke local
+          }
+          if (state is RegisterError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  state.respond.message,
+                  textAlign: TextAlign.center,
                 ),
+                backgroundColor: AppColors.deepRed,
               ),
-            ),
-            InkWell(
-              onTap: () {
-                context.push('/login');
-              },
-              child: Text(
-                "Sign In",
+            );
+          }
+        },
+        builder: (context, state) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Full Name",
                 style: GoogleFonts.plusJakartaSans(
                   textStyle: TextStyle(
                     fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF67191F),
                   ),
                 ),
               ),
-            )
-          ],
-        )
-      ],
+              SizedBox(
+                height: 4,
+              ),
+              TextField(
+                controller: _fullNameController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  hintText: 'Full Name',
+                  errorText: _fullNameError,
+                  prefixIcon: Icon(Icons.person),
+                  hintStyle: GoogleFonts.plusJakartaSans(
+                    textStyle: TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              Text(
+                "Username",
+                style: GoogleFonts.plusJakartaSans(
+                  textStyle: TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 4,
+              ),
+              TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  hintText: 'Username',
+                  errorText: _usernameError,
+                  prefixIcon: Icon(Icons.account_circle_rounded),
+                  hintStyle: GoogleFonts.plusJakartaSans(
+                    textStyle: TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              Text(
+                "Phone Number",
+                style: GoogleFonts.plusJakartaSans(
+                  textStyle: TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 4,
+              ),
+              TextField(
+                controller: _phoneController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  hintText: 'Phone Number',
+                  prefixIcon: Icon(
+                    Icons.phone,
+                  ),
+                  errorText: _phoneError,
+                  hintStyle: GoogleFonts.plusJakartaSans(
+                    textStyle: TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              Text(
+                "Password",
+                style: GoogleFonts.plusJakartaSans(
+                  textStyle: TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 4,
+              ),
+              TextField(
+                controller: _passwordController,
+                obscureText: !_isPasswordVisible,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  hintText: 'Password',
+                  errorText: _passwordError,
+                  prefixIcon: Icon(Icons.key_rounded),
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        _isPasswordVisible = !_isPasswordVisible;
+                      });
+                    },
+                    icon: Icon(
+                      _isPasswordVisible
+                          ? Icons.visibility_rounded
+                          : Icons.visibility_off_rounded,
+                    ),
+                  ),
+                  hintStyle: GoogleFonts.plusJakartaSans(
+                    textStyle: TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              Text(
+                "Password Confirmation",
+                style: GoogleFonts.plusJakartaSans(
+                  textStyle: TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 4,
+              ),
+              TextField(
+                controller: _passwordConfirmController,
+                obscureText: !_isPasswordVisible,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  hintText: 'Password Confirmation',
+                  errorText: _passwordConfirmError,
+                  prefixIcon: Icon(Icons.key_rounded),
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        _isPasswordVisible = !_isPasswordVisible;
+                      });
+                    },
+                    icon: Icon(
+                      _isPasswordVisible
+                          ? Icons.visibility_rounded
+                          : Icons.visibility_off_rounded,
+                    ),
+                  ),
+                  hintStyle: GoogleFonts.plusJakartaSans(
+                    textStyle: TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 32,
+              ),
+              if (state is AuthLoading) ...[
+                Center(
+                  child: CircularProgressIndicator(
+                    color: AppColors.deepRed,
+                  ),
+                )
+              ] else ...[
+                PrimaryButton(
+                  text: "Sign Up",
+                  onPressed: () {
+                    validateAndSubmit();
+                  },
+                  backgroundColor: AppColors.deepRed,
+                  textColor: Colors.white,
+                  width: double.infinity,
+                ),
+              ],
+              SizedBox(
+                height: 12,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Already have an account? ",
+                    style: GoogleFonts.plusJakartaSans(
+                      textStyle: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      context.push('/login');
+                    },
+                    child: Text(
+                      "Sign In",
+                      style: GoogleFonts.plusJakartaSans(
+                        textStyle: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xFF67191F),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              )
+            ],
+          );
+        },
+      ),
     );
   }
 
@@ -274,7 +308,14 @@ class _RegisterFormState extends State<RegisterForm> {
         _phoneError == null &&
         _passwordError == null &&
         _passwordConfirmError == null) {
-      print("Proceed with registration");
+      // context.read<AuthCubit>().postRegister(
+      //   fullname: _fullNameController.text.trim(),
+      //   username: _usernameController.text.trim(),
+      //   phoneNumber: _phoneController.text.trim(),
+      //   password: _passwordController.text.trim(),
+      //   passwordConfirmation: _passwordConfirmController.text.trim(),
+      //   email: 
+      //     );
     }
   }
 }

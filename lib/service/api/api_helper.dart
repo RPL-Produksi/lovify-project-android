@@ -7,7 +7,7 @@ import 'api_controller.dart';
 
 class ApiHelper {
   static Future login(LoginModel request) async {
-    final respond = await ApiController.postData('auth/login', request);
+    final respond = await ApiController.postData('auth/login', request.toJson());
     if (respond is ApiErrorRespondModel) { 
       return respond;
     } else {
@@ -16,7 +16,7 @@ class ApiHelper {
   }
 
   static Future register(FormData request) async {
-    final respond = await ApiController.postData('auth/register');
+    final respond = await ApiController.postData('auth/register', request);
     if (respond is ApiErrorRespondModel) {
       return respond;
     } else {

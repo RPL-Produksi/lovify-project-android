@@ -46,10 +46,11 @@ class AuthCubit extends Cubit<AuthState> {
       return;
     }
     emit(AuthLoading());
-    final respond = await ApiHelper.login(LoginModel(
-      credentials: credential,
+    final loginModel = LoginModel(
+      credential: credential,
       password: password,
-    ));
+    );
+    final respond = await ApiHelper.login(loginModel);
     if (respond is AuthRespondModel) {
       ApiController.token = respond.token;
       emit(LoginSuccess(respond: respond));
