@@ -4,7 +4,7 @@ import 'package:lovify_android/models/api_error_respond_model/api_error_respond_
 import 'api_exception.dart';
 
 class ApiController {
-  static const baseUrl = "http://127.0.0.1:8000";
+  static const baseUrl = "http://10.10.10.101:83";
   static String? token;
 
   static var dio = Dio(
