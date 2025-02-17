@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,12 +18,12 @@ class _RegisterFormState extends State<RegisterForm> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _passwordConfirmController =
       TextEditingController();
-      
-      String? _fullNameError;
-      String? _usernameError;
-      String? _phoneError;
-      String? _passwordError;
-      String? _passwordConfirmError;
+
+  String? _fullNameError;
+  String? _usernameError;
+  String? _phoneError;
+  String? _passwordError;
+  String? _passwordConfirmError;
 
   bool _isPasswordVisible = false;
   @override
@@ -252,17 +251,24 @@ class _RegisterFormState extends State<RegisterForm> {
       ],
     );
   }
+
   void validateAndSubmit() {
     setState(() {
-      _fullNameError = _fullNameController.text.isEmpty ? "Full name is required" : null;
-      _usernameError = _usernameController.text.isEmpty ? "Username is required" : null;
-      _phoneError = _phoneController.text.isEmpty ? "Phone number is required" : null;
-      _passwordError = _passwordController.text.isEmpty ? "Password is required" : null;
+      _fullNameError =
+          _fullNameController.text.isEmpty ? "Full name is required" : null;
+      _usernameError =
+          _usernameController.text.isEmpty ? "Username is required" : null;
+      _phoneError =
+          _phoneController.text.isEmpty ? "Phone number is required" : null;
+      _passwordError =
+          _passwordController.text.isEmpty ? "Password is required" : null;
       _passwordConfirmError = _passwordConfirmController.text.isEmpty
           ? "Password confirmation is required"
-          : (_passwordController.text != _passwordConfirmController.text ? "Passwords do not match" : null);
+          : (_passwordController.text != _passwordConfirmController.text
+              ? "Passwords do not match"
+              : null);
     });
-  
+
     if (_fullNameError == null &&
         _usernameError == null &&
         _phoneError == null &&
@@ -272,6 +278,3 @@ class _RegisterFormState extends State<RegisterForm> {
     }
   }
 }
-
-
-

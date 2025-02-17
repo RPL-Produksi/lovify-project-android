@@ -14,7 +14,7 @@ class ApiErrorRespondModel extends Equatable {
     return ApiErrorRespondModel(
       status: data['status'] as String?,
       message: data['message'] == null
-          ? null
+          ? data['error'] as String?
           : data['message'] is String?
               ? data['message'] as String?
               : MessageErrorModel.fromMap(

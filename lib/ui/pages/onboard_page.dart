@@ -127,7 +127,6 @@ class _OnBoardPageState extends State<OnBoardPage> {
                 scrollDirection: Axis.horizontal, // Horizontal scrolling
                 scrollPhysics: BouncingScrollPhysics(),
                 enableInfiniteScroll: false,
-
                 onPageChanged: (index, reason) {
                   setState(() {
                     _currentPage = index;

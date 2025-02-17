@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:lovify_android/models/api_error_respond_model/api_error_respond_model.dart';
 
 import 'api_exception.dart';
 
@@ -34,7 +35,7 @@ class ApiController {
       return respond.data;
     } on DioException catch (e) {
       final error = checkException(e);
-      return error;
+      return ApiErrorRespondModel.fromMap(error);
     } catch (e) {
       throw Exception(e);
     }
@@ -55,7 +56,8 @@ class ApiController {
       );
       return respond.data;
     } on DioException catch (e) {
-      return checkException(e);
+      final error = checkException(e);
+      return ApiErrorRespondModel.fromMap(error);
     } catch (e) {
       throw Exception(e);
     }
