@@ -1,8 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lovify_android/configs/app_colors.dart';
+import 'package:lovify_android/ui/pages/auth/login/login_form.dart';
 import 'package:lovify_android/ui/widgets/primary_button.dart';
 
 class RegisterForm extends StatefulWidget {
@@ -16,15 +16,17 @@ class _RegisterFormState extends State<RegisterForm> {
   final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _passwordConfirmController =
       TextEditingController();
-      
-      String? _fullNameError;
-      String? _usernameError;
-      String? _phoneError;
-      String? _passwordError;
-      String? _passwordConfirmError;
+
+  String? _fullNameError;
+  String? _usernameError;
+  String? _phoneError;
+  String? _emailError;
+  String? _passwordError;
+  String? _passwordConfirmError;
 
   bool _isPasswordVisible = false;
   @override
@@ -36,6 +38,7 @@ class _RegisterFormState extends State<RegisterForm> {
           "Full Name",
           style: GoogleFonts.plusJakartaSans(
             textStyle: TextStyle(
+              color: AppColors.deepRed,
               fontSize: 14,
             ),
           ),
@@ -66,6 +69,7 @@ class _RegisterFormState extends State<RegisterForm> {
           "Username",
           style: GoogleFonts.plusJakartaSans(
             textStyle: TextStyle(
+              color: AppColors.deepRed,
               fontSize: 14,
             ),
           ),
@@ -74,6 +78,7 @@ class _RegisterFormState extends State<RegisterForm> {
           height: 4,
         ),
         TextField(
+          controller: _usernameController,
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
@@ -95,6 +100,7 @@ class _RegisterFormState extends State<RegisterForm> {
           "Phone Number",
           style: GoogleFonts.plusJakartaSans(
             textStyle: TextStyle(
+              color: AppColors.deepRed,
               fontSize: 14,
             ),
           ),
@@ -104,15 +110,48 @@ class _RegisterFormState extends State<RegisterForm> {
         ),
         TextField(
           controller: _phoneController,
+          keyboardType: TextInputType.phone,
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
             ),
             hintText: 'Phone Number',
+            errorText: _phoneError,
+            prefixIcon: Icon(Icons.account_circle_rounded),
+            hintStyle: GoogleFonts.plusJakartaSans(
+              textStyle: TextStyle(
+                fontSize: 14,
+              ),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 16,
+        ),
+        Text(
+          "Email",
+          style: GoogleFonts.plusJakartaSans(
+            textStyle: TextStyle(
+              color: AppColors.deepRed,
+              fontSize: 14,
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 4,
+        ),
+        TextField(
+          controller: _emailController,
+          keyboardType: TextInputType.emailAddress,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            hintText: 'Email',
             prefixIcon: Icon(
               Icons.phone,
             ),
-            errorText: _phoneError,
+            errorText: _emailError,
             hintStyle: GoogleFonts.plusJakartaSans(
               textStyle: TextStyle(
                 fontSize: 14,
@@ -127,6 +166,7 @@ class _RegisterFormState extends State<RegisterForm> {
           "Password",
           style: GoogleFonts.plusJakartaSans(
             textStyle: TextStyle(
+              color: AppColors.deepRed,
               fontSize: 14,
             ),
           ),
@@ -170,6 +210,7 @@ class _RegisterFormState extends State<RegisterForm> {
           "Password Confirmation",
           style: GoogleFonts.plusJakartaSans(
             textStyle: TextStyle(
+              color: AppColors.deepRed,
               fontSize: 14,
             ),
           ),
@@ -252,26 +293,36 @@ class _RegisterFormState extends State<RegisterForm> {
       ],
     );
   }
+
   void validateAndSubmit() {
     setState(() {
-      _fullNameError = _fullNameController.text.isEmpty ? "Full name is required" : null;
-      _usernameError = _usernameController.text.isEmpty ? "Username is required" : null;
-      _phoneError = _phoneController.text.isEmpty ? "Phone number is required" : null;
-      _passwordError = _passwordController.text.isEmpty ? "Password is required" : null;
+      _fullNameError =
+          _fullNameController.text.isEmpty ? "Full name is required" : null;  
+      _usernameError =
+          _usernameController.text.isEmpty ? "Username is required" : null;
+      _phoneError =
+          _phoneController.text.isEmpty ? "Phone number is required" : null;
+      _emailError = _emailController.text.isEmpty
+          ? "Email is required"
+          : (!isValidEmail(_emailController.text)
+              ? "Make sure your email is correct (e.g., name@example.com)"
+              : null);
+      _passwordError =
+          _passwordController.text.isEmpty ? "Password is required" : null;
       _passwordConfirmError = _passwordConfirmController.text.isEmpty
           ? "Password confirmation is required"
-          : (_passwordController.text != _passwordConfirmController.text ? "Passwords do not match" : null);
+          : (_passwordController.text != _passwordConfirmController.text
+              ? "Passwords do not match"
+              : null);
     });
-  
+
     if (_fullNameError == null &&
         _usernameError == null &&
         _phoneError == null &&
+        _emailError == null &&
         _passwordError == null &&
         _passwordConfirmError == null) {
       print("Proceed with registration");
     }
   }
 }
-
-
-

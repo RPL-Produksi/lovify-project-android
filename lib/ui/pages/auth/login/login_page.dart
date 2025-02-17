@@ -15,7 +15,7 @@ class LoginPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: 150,
+              height: 100,
             ),
             Image.asset(
               "assets/images/lovify-logo.png",
