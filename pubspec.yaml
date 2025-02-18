@@ -8,7 +8,9 @@ environment:
 
 dependencies:
   cached_network_image: ^3.4.1
+  carousel_slider: ^5.0.0
   dio: ^5.7.0
+  email_validator: ^3.0.0
   equatable: ^2.0.7
   firebase_core: ^3.10.0
   firebase_messaging: ^15.2.0
@@ -17,14 +19,15 @@ dependencies:
   flutter_bloc: ^8.1.6
   flutter_image_compress: ^2.4.0
   flutter_local_notifications: ^18.0.1
+  flutter_native_splash: ^2.4.4
   flutter_secure_storage: ^9.2.4
   go_router: ^14.6.3
   google_fonts: ^6.2.1
+  image_cropper: ^9.0.0
+  image_picker: ^1.1.2
   permission_handler: ^11.3.1
-  flutter_native_splash: ^2.4.4
-  carousel_slider: ^5.0.0
+  phone_numbers_parser: ^9.0.3
   smooth_page_indicator: ^1.2.0+3
-
 
 dev_dependencies:
   flutter_lints: ^5.0.0
@@ -34,8 +37,5 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/lovify-logo.png
-    - assets/images/onboard-bg.png
-    - assets/images/onboard-fade.png
-    - assets/fonts/Charm-Bold.ttf
-    - assets/fonts/Charm-Regular.ttf
+    - assets/images/
+    - assets/fonts/
