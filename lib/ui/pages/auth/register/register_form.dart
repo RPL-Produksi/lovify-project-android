@@ -39,7 +39,6 @@ class _RegisterFormState extends State<RegisterForm> {
         listener: (context, state) {
           if (state is RegisterSuccess) {
             context.go('/home');
-            // TODO: simpan token ke local
           }
           if (state is RegisterError) {
             ScaffoldMessenger.of(context).showSnackBar(

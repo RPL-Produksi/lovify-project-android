@@ -44,7 +44,6 @@ class _LoginFormState extends State<LoginForm> {
         listener: (context, state) {
           if (state is LoginSuccess) {
             context.go('/home');
-            // TODO: simpan token ke local
           }
           if (state is LoginError) {
             // TODO: Respon jika login gagal/error di sini

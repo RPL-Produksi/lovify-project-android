@@ -53,6 +53,7 @@ class AuthCubit extends Cubit<AuthState> {
     final respond = await ApiHelper.login(loginModel);
     if (respond is AuthRespondModel) {
       ApiController.token = respond.token;
+      ManageToken.writeToken();
       emit(LoginSuccess(respond: respond));
       return;
     }
@@ -153,6 +154,7 @@ class AuthCubit extends Cubit<AuthState> {
     final respond = await ApiHelper.register(formData);
     if (respond is AuthRespondModel) {
       ApiController.token = respond.token;
+      ManageToken.writeToken();
       emit(RegisterSuccess(respond: respond));
       return;
     }
