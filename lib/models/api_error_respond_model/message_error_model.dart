@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class MessageErrorModel extends Equatable {
-  final List<String>? fullname;
-  final List<String>? username;
-  final List<String>? password;
-  final List<String>? email;
-  final List<String>? phoneNumber;
-  final List<String>? role;
+  final List<dynamic>? fullname;
+  final List<dynamic>? username;
+  final List<dynamic>? password;
+  final List<dynamic>? email;
+  final List<dynamic>? phoneNumber;
+  final List<dynamic>? role;
 
   const MessageErrorModel({
     this.fullname,
@@ -21,12 +21,12 @@ class MessageErrorModel extends Equatable {
 
   factory MessageErrorModel.fromMap(Map<String, dynamic> data) =>
       MessageErrorModel(
-        fullname: data['fullname'] as List<String>?,
-        username: data['username'] as List<String>?,
-        password: data['password'] as List<String>?,
-        email: data['email'] as List<String>?,
-        phoneNumber: data['phone_number'] as List<String>?,
-        role: data['role'] as List<String>?,
+        fullname: data['fullname'] as List<dynamic>?,
+        username: data['username'] as List<dynamic>?,
+        password: data['password'] as List<dynamic>?,
+        email: data['email'] as List<dynamic>?,
+        phoneNumber: data['phone_number'] as List<dynamic>?,
+        role: data['role'] as List<dynamic>?,
       );
 
   Map<String, dynamic> toMap() => {
@@ -60,5 +60,29 @@ class MessageErrorModel extends Equatable {
       phoneNumber,
       role,
     ];
+  }
+
+  @override
+  String toString() {
+    var str = '';
+    fullname?.forEach((element) {
+      str += '$element\n';
+    });
+    username?.forEach((element) {
+      str += '$element\n';
+    });
+    password?.forEach((element) {
+      str += '$element\n';
+    });
+    email?.forEach((element) {
+      str += '$element\n';
+    });
+    phoneNumber?.forEach((element) {
+      str += '$element\n';
+    });
+    role?.forEach((element) {
+      str += '$element\n';
+    });
+    return str;
   }
 }

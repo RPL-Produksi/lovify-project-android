@@ -31,7 +31,7 @@ class RegisterModel {
       'password': password,
       'password_confirmation': passwordConfirmation,
       'email': email,
-      'phoneNumber': phoneNumber,
+      'phone_number': phoneNumber,
       'role': role,
     };
   }

@@ -54,6 +54,7 @@ class _LoginFormState extends State<LoginForm> {
                   state.respond.message,
                   textAlign: TextAlign.center,
                 ),
+                duration: Duration(seconds: 2),
                 backgroundColor: AppColors.deepRed,
               ),
             );

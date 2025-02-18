@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -17,6 +18,7 @@ class _RegisterFormState extends State<RegisterForm> {
   final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _passwordConfirmController =
       TextEditingController();
@@ -24,6 +26,7 @@ class _RegisterFormState extends State<RegisterForm> {
   String? _fullNameError;
   String? _usernameError;
   String? _phoneError;
+  String? _emailError;
   String? _passwordError;
   String? _passwordConfirmError;
 
@@ -42,9 +45,10 @@ class _RegisterFormState extends State<RegisterForm> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
-                  state.respond.message,
+                  state.respond.message.toString(),
                   textAlign: TextAlign.center,
                 ),
+                duration: Duration(seconds: 2),
                 backgroundColor: AppColors.deepRed,
               ),
             );
@@ -96,6 +100,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 height: 4,
               ),
               TextField(
+                controller: _usernameController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -126,6 +131,7 @@ class _RegisterFormState extends State<RegisterForm> {
               ),
               TextField(
                 controller: _phoneController,
+                keyboardType: TextInputType.phone,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -135,6 +141,39 @@ class _RegisterFormState extends State<RegisterForm> {
                     Icons.phone,
                   ),
                   errorText: _phoneError,
+                  hintStyle: GoogleFonts.plusJakartaSans(
+                    textStyle: TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              Text(
+                "Email",
+                style: GoogleFonts.plusJakartaSans(
+                  textStyle: TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 4,
+              ),
+              TextField(
+                controller: _emailController,
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  hintText: 'Email',
+                  prefixIcon: Icon(
+                    Icons.mail,
+                  ),
+                  errorText: _emailError,
                   hintStyle: GoogleFonts.plusJakartaSans(
                     textStyle: TextStyle(
                       fontSize: 14,
@@ -241,7 +280,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 PrimaryButton(
                   text: "Sign Up",
                   onPressed: () {
-                    validateAndSubmit();
+                    validateAndSubmit(context);
                   },
                   backgroundColor: AppColors.deepRed,
                   textColor: Colors.white,
@@ -264,7 +303,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   ),
                   InkWell(
                     onTap: () {
-                      context.push('/login');
+                      context.pop();
                     },
                     child: Text(
                       "Sign In",
@@ -286,7 +325,7 @@ class _RegisterFormState extends State<RegisterForm> {
     );
   }
 
-  void validateAndSubmit() {
+  void validateAndSubmit(BuildContext context) {
     setState(() {
       _fullNameError =
           _fullNameController.text.isEmpty ? "Full name is required" : null;
@@ -296,9 +335,15 @@ class _RegisterFormState extends State<RegisterForm> {
           _phoneController.text.isEmpty ? "Phone number is required" : null;
       _passwordError =
           _passwordController.text.isEmpty ? "Password is required" : null;
+      _emailError = _emailController.text.isEmpty
+          ? "Please enter your email to continue"
+          : (!EmailValidator.validate(_emailController.text.trim())
+              ? "Make sure your email is correct (e.g., name@example.com)"
+              : null);
       _passwordConfirmError = _passwordConfirmController.text.isEmpty
           ? "Password confirmation is required"
-          : (_passwordController.text != _passwordConfirmController.text
+          : (_passwordConfirmController.text.trim() !=
+                  _passwordController.text.trim()
               ? "Passwords do not match"
               : null);
     });
@@ -306,16 +351,17 @@ class _RegisterFormState extends State<RegisterForm> {
     if (_fullNameError == null &&
         _usernameError == null &&
         _phoneError == null &&
+        _emailError == null &&
         _passwordError == null &&
         _passwordConfirmError == null) {
-      // context.read<AuthCubit>().postRegister(
-      //   fullname: _fullNameController.text.trim(),
-      //   username: _usernameController.text.trim(),
-      //   phoneNumber: _phoneController.text.trim(),
-      //   password: _passwordController.text.trim(),
-      //   passwordConfirmation: _passwordConfirmController.text.trim(),
-      //   email: 
-      //     );
+      context.read<AuthCubit>().postRegister(
+            fullname: _fullNameController.text.trim(),
+            username: _usernameController.text.trim(),
+            password: _passwordController.text.trim(),
+            passwordConfirmation: _passwordConfirmController.text.trim(),
+            email: _emailController.text.trim(),
+            phoneNumber: _phoneController.text.trim(),
+          );
     }
   }
 }

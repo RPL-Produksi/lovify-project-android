@@ -7,10 +7,10 @@ class AuthRespondModel extends Equatable {
   final String? fullname;
   final String? username;
   final String? email;
-  final int? phoneVerified;
   final String? avatar;
   final String? role;
-  final dynamic isVerified;
+  final dynamic phoneVerified;
+  final dynamic emailVerified;
   final String? phoneNumber;
   final String? token;
 
@@ -19,10 +19,10 @@ class AuthRespondModel extends Equatable {
     this.fullname,
     this.username,
     this.email,
-    this.phoneVerified,
     this.avatar,
     this.role,
-    this.isVerified,
+    this.phoneVerified,
+    this.emailVerified,
     this.phoneNumber,
     this.token,
   });
@@ -33,10 +33,10 @@ class AuthRespondModel extends Equatable {
       fullname: data['fullname'] as String?,
       username: data['username'] as String?,
       email: data['email'] as String?,
-      phoneVerified: data['phone_verified'] as int?,
       avatar: data['avatar'] as String?,
       role: data['role'] as String?,
-      isVerified: data['is_verified'] as dynamic,
+      emailVerified: data['email_verified'] as dynamic,
+      phoneVerified: data['phone_verified'] as dynamic,
       phoneNumber: data['phone_number'] as String?,
       token: data['token'] as String?,
     );
@@ -47,10 +47,10 @@ class AuthRespondModel extends Equatable {
         'fullname': fullname,
         'username': username,
         'email': email,
-        'phone_verified': phoneVerified,
         'avatar': avatar,
         'role': role,
-        'is_verified': isVerified,
+        'email_verified': emailVerified,
+        'phone_verified': phoneVerified,
         'phone_number': phoneNumber,
         'token': token,
       };
@@ -72,10 +72,10 @@ class AuthRespondModel extends Equatable {
     String? fullname,
     String? username,
     String? email,
-    int? phoneVerified,
+    dynamic phoneVerified,
     String? avatar,
     String? role,
-    dynamic isVerified,
+    dynamic emailVerified,
     String? phoneNumber,
     String? token,
   }) {
@@ -87,7 +87,7 @@ class AuthRespondModel extends Equatable {
       phoneVerified: phoneVerified ?? this.phoneVerified,
       avatar: avatar ?? this.avatar,
       role: role ?? this.role,
-      isVerified: isVerified ?? this.isVerified,
+      emailVerified: emailVerified ?? this.emailVerified,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       token: token ?? this.token,
     );
@@ -103,7 +103,7 @@ class AuthRespondModel extends Equatable {
       phoneVerified,
       avatar,
       role,
-      isVerified,
+      emailVerified,
       phoneNumber,
       token,
     ];

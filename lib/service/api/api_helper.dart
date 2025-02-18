@@ -20,7 +20,7 @@ class ApiHelper {
     if (respond is ApiErrorRespondModel) {
       return respond;
     } else {
-      return AuthRespondModel.fromMap(respond);
+      return AuthRespondModel.fromMap(respond['data']);
     }
   }
 
