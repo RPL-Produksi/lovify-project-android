@@ -128,11 +128,8 @@ class _OnBoardPageState extends State<OnBoardPage> {
                 scrollPhysics: BouncingScrollPhysics(),
                 enableInfiniteScroll: false,
 
-                onPageChanged: (index, reason) {
-                  setState(() {
-                    _currentPage = index;
-                  });
-                },
+                onPageChanged: (index, reason) =>
+                    setState(() => _currentPage = index),
               ),
               carouselController: _carouselController,
             ),
@@ -142,6 +139,8 @@ class _OnBoardPageState extends State<OnBoardPage> {
             child: AnimatedSmoothIndicator(
               activeIndex: _currentPage, // The controller used by the carousel
               count: 3, // Number of pages
+              onDotClicked: (index) =>
+                  setState(() => _carouselController.jumpToPage(index)),
               effect: ExpandingDotsEffect(
                 dotHeight: 8.0,
                 dotWidth: 14.0,
