@@ -22,7 +22,6 @@ class RegisterModel {
     required this.phoneNumber,
   });
 
-
   Map<String, dynamic> toMap() {
     return {
       if (avatar != null) 'avatar': avatar,

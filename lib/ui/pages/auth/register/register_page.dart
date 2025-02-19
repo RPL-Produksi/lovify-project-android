@@ -21,7 +21,6 @@ class _RegisterPageState extends State<RegisterPage> {
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32),
           child: ListView(
-            // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 height: 150,

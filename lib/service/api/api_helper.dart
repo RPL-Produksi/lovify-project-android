@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:lovify_android/models/category_model/category_respond_model.dart';
 
 import '../../models/api_error_respond_model/api_error_respond_model.dart';
 import '../../models/auth/login_model.dart';
@@ -6,12 +7,14 @@ import '../../models/auth_respond_model.dart';
 import 'api_controller.dart';
 
 class ApiHelper {
+  // Auth
   static Future login(LoginModel request) async {
-    final respond = await ApiController.postData('auth/login', request.toJson());
-    if (respond is ApiErrorRespondModel) { 
+    final respond =
+        await ApiController.postData('auth/login', request.toJson());
+    if (respond is ApiErrorRespondModel) {
       return respond;
     } else {
-      return AuthRespondModel.fromMap(respond);
+      return AuthRespondModel.fromMap(respond['data']);
     }
   }
 
@@ -30,6 +33,16 @@ class ApiHelper {
       return respond;
     } else {
       return respond['message'];
+    }
+  }
+
+  // Home
+  static Future getCategories() async {
+    final respond = await ApiController.getData('home/categories');
+    if (respond is ApiErrorRespondModel) {
+      return respond;
+    } else {
+      return CategoryRespondModel.fromMap(respond['data']);
     }
   }
 }
