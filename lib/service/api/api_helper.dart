@@ -52,8 +52,8 @@ class ApiHelper {
   }
 
   // Product
-  static Future getProducts() async {
-    final respond = await ApiController.getData(url: 'products');
+  static Future getProducts(String? id) async {
+    final respond = await ApiController.getData(url: id == null ? 'products' : 'products/$id');
     if (respond is ApiErrorRespondModel) {
       return respond;
     } else {
@@ -76,7 +76,7 @@ class ApiHelper {
   static Future getProductsByVendorId(int vendorId) async {
     final respond = await ApiController.getData(
       url: 'products',
-      params: {'vendor_id': vendorId},
+      params: {'vendoId': vendorId},
     );
     if (respond is ApiErrorRespondModel) {
       return respond;
