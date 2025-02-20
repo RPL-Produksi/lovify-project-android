@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lovify_android/service/api/api_controller.dart';
+import 'package:lovify_android/util/manage_token.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -17,15 +20,15 @@ class _SplashScreenState extends State<SplashScreen>
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
-    ApiController.token.toString().isNotEmpty
-        ? Future.delayed(
-            const Duration(seconds: 3),
-            () => context.go('/home'),
-          )
-        : Future.delayed(
-            const Duration(seconds: 3),
-            () => context.go('/onboard'),
-          );
+    ManageToken.readToken();
+
+    Timer(const Duration(seconds: 3), () {
+      if (ApiController.token == null) {
+        context.go('/onboard');
+      } else {
+        context.go('/home');
+      }
+    });
   }
 
   @override

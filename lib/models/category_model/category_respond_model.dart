@@ -11,7 +11,8 @@ class CategoryRespondModel extends Equatable {
 
   const CategoryRespondModel({this.status, this.message, this.data});
 
-  factory CategoryRespondModel.fromMap(Map<String, dynamic> data) => CategoryRespondModel(
+  factory CategoryRespondModel.fromMap(Map<String, dynamic> data) =>
+      CategoryRespondModel(
         status: data['status'] as String?,
         message: data['message'] as String?,
         data: (data['data'] as List<dynamic>?)
@@ -29,7 +30,8 @@ class CategoryRespondModel extends Equatable {
   ///
   /// Parses the string and returns the resulting Json object as [CategoryRespondModel].
   factory CategoryRespondModel.fromJson(String data) {
-    return CategoryRespondModel.fromMap(json.decode(data) as Map<String, dynamic>);
+    return CategoryRespondModel.fromMap(
+        json.decode(data) as Map<String, dynamic>);
   }
 
   /// `dart:convert`

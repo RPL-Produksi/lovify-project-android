@@ -19,7 +19,7 @@ class AuthCubit extends Cubit<AuthState> {
   AuthCubit() : super(AuthInitial());
 
   void isInit() => emit(AuthInitial());
-  
+
   void isIdle() => emit(AuthIdle());
 
   void postLogin({required String credential, required String password}) async {

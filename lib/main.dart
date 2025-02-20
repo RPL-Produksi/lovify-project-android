@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lovify_android/util/manage_token.dart';
 
 import 'configs/app_route.dart';
 import 'configs/app_theme.dart';
@@ -13,8 +12,6 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ManageToken.readToken();
-
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: AppTheme.theme,

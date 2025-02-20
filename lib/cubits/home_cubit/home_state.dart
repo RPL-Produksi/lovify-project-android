@@ -30,5 +30,3 @@ final class CategoriesError extends HomeState {
   @override
   List<Object> get props => [respond];
 }
-
-

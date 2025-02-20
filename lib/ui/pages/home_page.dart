@@ -6,6 +6,7 @@ import 'package:lovify_android/configs/app_colors.dart';
 import 'package:lovify_android/cubits/home_cubit/home_cubit.dart';
 import 'package:lovify_android/data/vendor_categories_data.dart';
 import 'package:lovify_android/models/vendor_category_model.dart';
+import 'package:lovify_android/util/manage_token.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomePage extends StatefulWidget {
@@ -29,80 +30,110 @@ class _HomePageState extends State<HomePage> {
       create: (context) => HomeCubit(),
       child: BlocConsumer<HomeCubit, HomeState>(
         listener: (context, state) {
-          // TODO: implement listener
+          if (context.read<HomeCubit>().categories.isEmpty &&
+              state is HomeIdle) {
+            context.read<HomeCubit>().getCategories();
+          }
+          if (state is CategoriesError) {
+            // TODO: error get kategori di sini
+            showDialog(
+              context: context,
+              builder: (context) => Dialog(
+                child: Text(
+                  state.respond.message.toString(),
+                ),
+              ),
+            );
+          }
         },
         builder: (context, state) {
+          if (context.read<HomeCubit>().categories.isEmpty) {
+            context.read<HomeCubit>().getCategories();
+          }
           return SafeArea(
             left: false,
             right: false,
             bottom: false,
             child: Scaffold(
               resizeToAvoidBottomInset: false,
+              floatingActionButton: IconButton(
+                onPressed: () => ManageToken.deleteToken(),
+                icon: Icon(Icons.refresh),
+              ),
               body: Padding(
                 padding: const EdgeInsets.only(
                   left: 32,
                   right: 32,
                   top: 20,
                 ),
-                child: RefreshIndicator(
-                  onRefresh: () async {},
-                  child: ListView(
-                    scrollDirection: Axis.vertical,
-                    children: [
-                      appBar(),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      SearchBar(
-                        backgroundColor:
-                            WidgetStatePropertyAll(AppColors.whiteSmoke),
-                        enabled: false,
-                        leading: Icon(
-                          Icons.search,
-                          color: AppColors.spaceCadet,
+                child: state is HomeLoading
+                    ? Center(
+                        child: CircularProgressIndicator(
+                          color: AppColors.deepRed,
                         ),
-                        side: WidgetStatePropertyAll(
-                          BorderSide(
-                            color: AppColors.spaceCadet,
-                            width: 2,
-                          ),
+                      )
+                    : RefreshIndicator(
+                        onRefresh: () async {
+                          context.read<HomeCubit>().getCategories();
+                        },
+                        child: ListView(
+                          scrollDirection: Axis.vertical,
+                          children: [
+                            appBar(),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            SearchBar(
+                              backgroundColor:
+                                  WidgetStatePropertyAll(AppColors.whiteSmoke),
+                              enabled: false,
+                              leading: Icon(
+                                Icons.search,
+                                color: AppColors.spaceCadet,
+                              ),
+                              side: WidgetStatePropertyAll(
+                                BorderSide(
+                                  color: AppColors.spaceCadet,
+                                  width: 2,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            highlightCarousel(),
+                            categoriesListView(),
+                            articleListView(),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Text(
+                                  'Recommended for you!',
+                                  style: GoogleFonts.plusJakartaSans(
+                                    textStyle: titleTextStyle(),
+                                  ),
+                                ),
+                                GridView.builder(
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                  ),
+                                  itemCount: 8,
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemBuilder:
+                                      (BuildContext context, int index) =>
+                                          placeholderContainer(),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      highlightCarousel(),
-                      categoriesListView(),
-                      articleListView(),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            'Recommended for you!',
-                            style: GoogleFonts.plusJakartaSans(
-                              textStyle: titleTextStyle(),
-                            ),
-                          ),
-                          GridView.builder(
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                            ),
-                            itemCount: 8,
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemBuilder: (BuildContext context, int index) =>
-                                placeholderContainer(),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
               ),
             ),
           );
