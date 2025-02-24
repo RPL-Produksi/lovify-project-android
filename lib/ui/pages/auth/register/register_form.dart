@@ -23,6 +23,13 @@ class _RegisterFormState extends State<RegisterForm> {
   final TextEditingController _passwordConfirmController =
       TextEditingController();
 
+  final FocusNode _fullNameFocus = FocusNode();
+  final FocusNode _usernameFocus = FocusNode();
+  final FocusNode _phoneFocus = FocusNode();
+  final FocusNode _emailFocus = FocusNode();
+  final FocusNode _passwordFocus = FocusNode();
+  final FocusNode _passwordConfirmFocus = FocusNode();
+
   String? _fullNameError;
   String? _usernameError;
   String? _phoneError;
@@ -31,6 +38,24 @@ class _RegisterFormState extends State<RegisterForm> {
   String? _passwordConfirmError;
 
   bool _isPasswordVisible = false;
+
+  @override
+  void dispose() {
+    _fullNameController.dispose();
+    _usernameController.dispose();
+    _phoneController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _passwordConfirmController.dispose();
+    _fullNameFocus.dispose();
+    _usernameFocus.dispose();
+    _phoneFocus.dispose();
+    _emailFocus.dispose();
+    _passwordFocus.dispose();
+    _passwordConfirmFocus.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -70,6 +95,7 @@ class _RegisterFormState extends State<RegisterForm> {
               ),
               TextField(
                 controller: _fullNameController,
+                focusNode: _fullNameFocus,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -100,6 +126,7 @@ class _RegisterFormState extends State<RegisterForm> {
               ),
               TextField(
                 controller: _usernameController,
+                focusNode: _usernameFocus,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -130,6 +157,7 @@ class _RegisterFormState extends State<RegisterForm> {
               ),
               TextField(
                 controller: _phoneController,
+                focusNode: _phoneFocus,
                 keyboardType: TextInputType.phone,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
@@ -163,6 +191,7 @@ class _RegisterFormState extends State<RegisterForm> {
               ),
               TextField(
                 controller: _emailController,
+                focusNode: _emailFocus,
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
@@ -196,6 +225,7 @@ class _RegisterFormState extends State<RegisterForm> {
               ),
               TextField(
                 controller: _passwordController,
+                focusNode: _passwordFocus,
                 obscureText: !_isPasswordVisible,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
@@ -239,7 +269,9 @@ class _RegisterFormState extends State<RegisterForm> {
               ),
               TextField(
                 controller: _passwordConfirmController,
+                focusNode: _passwordConfirmFocus,
                 obscureText: !_isPasswordVisible,
+                textInputAction: TextInputAction.done,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -346,7 +378,6 @@ class _RegisterFormState extends State<RegisterForm> {
               ? "Passwords do not match"
               : null);
     });
-
 
     if (_fullNameError == null &&
         _usernameError == null &&

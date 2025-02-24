@@ -22,170 +22,162 @@ class _HomePageState extends State<HomePage> {
   final ScrollController _articleScrollController = ScrollController();
 
   int _currentPage = 0;
-
   int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => HomeCubit(),
-      child: BlocConsumer<HomeCubit, HomeState>(
-        listener: (context, state) {
-          // TODO: implement listener
-        },
-        builder: (context, state) {
-          return SafeArea(
-            left: false,
-            right: false,
-            bottom: false,
-            child: Scaffold(
-              bottomNavigationBar: BottomNavigationBar(
-                currentIndex: _currentIndex,
-                onTap: (index) => setState(() => _currentIndex = index),
-                unselectedItemColor: AppColors.spaceCadet,
-                selectedFontSize: 14,
-                unselectedFontSize: 14,
-                unselectedLabelStyle: GoogleFonts.plusJakartaSans(
-                  textStyle: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.spaceCadet,
-                  ),
-                ),
-                selectedLabelStyle: GoogleFonts.plusJakartaSans(
-                  textStyle: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.deepRed,
-                  ),
-                ),
-                selectedItemColor: AppColors.deepRed,
-                type: BottomNavigationBarType.fixed,
-                items: [
-                  BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.home,
-                      size: 32,
-                    ),
-                    label: 'Home',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.store,
-                      size: 32,
-                    ),
-                    label: 'Vendors',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.edit_calendar,
-                      size: 32,
-                    ),
-                    label: 'Plan',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.assignment,
-                      size: 32,
-                    ),
-                    label: 'Order',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.account_circle,
-                      size: 32,
-                    ),
-                    label: 'Profile',
-                  ),
-                ],
+      child: SafeArea(
+        left: false,
+        right: false,
+        bottom: false,
+        child: Scaffold(
+          bottomNavigationBar: BottomNavigationBar(
+            currentIndex: _currentIndex,
+            onTap: (index) => setState(() => _currentIndex = index),
+            unselectedItemColor: AppColors.spaceCadet,
+            selectedFontSize: 14,
+            unselectedFontSize: 14,
+            unselectedLabelStyle: GoogleFonts.plusJakartaSans(
+              textStyle: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: AppColors.spaceCadet,
               ),
-              resizeToAvoidBottomInset: false,
-              body: Padding(
-                padding: const EdgeInsets.only(
-                  left: 24,
-                  top: 20,
+            ),
+            selectedLabelStyle: GoogleFonts.plusJakartaSans(
+              textStyle: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: AppColors.deepRed,
+              ),
+            ),
+            selectedItemColor: AppColors.deepRed,
+            type: BottomNavigationBarType.fixed,
+            items: [
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.home,
+                  size: 32,
                 ),
-                child: RefreshIndicator(
-                  onRefresh: () async {},
-                  child: ListView(
-                    scrollDirection: Axis.vertical,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 24),
-                        child: appBar(),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 24),
-                        child: SizedBox(
-                          height: 35,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              hintStyle: TextStyle(fontSize: 14),
-                              contentPadding: EdgeInsets.only(left: 4),
-                              prefixIcon: Icon(
-                                Icons.search,
-                                size: 18,
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(64),
-                              ),
-                            ),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.store,
+                  size: 32,
+                ),
+                label: 'Vendors',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.edit_calendar,
+                  size: 32,
+                ),
+                label: 'Plan',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.assignment,
+                  size: 32,
+                ),
+                label: 'Order',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.account_circle,
+                  size: 32,
+                ),
+                label: 'Profile',
+              ),
+            ],
+          ),
+          resizeToAvoidBottomInset: false,
+          body: Padding(
+            padding: const EdgeInsets.only(
+              left: 24,
+              top: 20,
+            ),
+            child: RefreshIndicator(
+              onRefresh: () async {},
+              child: ListView(
+                scrollDirection: Axis.vertical,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 24),
+                    child: appBar(),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 24),
+                    child: SizedBox(
+                      height: 35,
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintStyle: TextStyle(fontSize: 14),
+                          contentPadding: EdgeInsets.only(left: 4),
+                          prefixIcon: Icon(
+                            Icons.search,
+                            size: 18,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(64),
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: 20,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 24),
+                    child: highlightCarousel(),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  categoriesListView(),
+                  articleListView(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: Text(
+                          'Recommended for you!',
+                          style: GoogleFonts.plusJakartaSans(
+                            textStyle: titleTextStyle(),
+                          ),
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(right: 24),
-                        child: highlightCarousel(),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      categoriesListView(),
-                      articleListView(),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: Text(
-                              'Recommended for you!',
-                              style: GoogleFonts.plusJakartaSans(
-                                textStyle: titleTextStyle(),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 24),
-                            child: GridView.builder(
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2, mainAxisExtent: 250),
-                              itemCount: 8,
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemBuilder: (BuildContext context, int index) =>
-                                  vendorContainer(),
-                            ),
-                          ),
-                        ],
+                        child: GridView.builder(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2, mainAxisExtent: 250),
+                          itemCount: 8,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemBuilder: (BuildContext context, int index) =>
+                              vendorContainer(),
+                        ),
                       ),
                     ],
                   ),
-                ),
+                ],
               ),
             ),
-          );
-        },
+          ),
+        ),
       ),
     );
   }

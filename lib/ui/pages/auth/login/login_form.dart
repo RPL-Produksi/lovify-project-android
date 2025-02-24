@@ -22,6 +22,7 @@ class _LoginFormState extends State<LoginForm> {
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
   final FocusNode _emailFocus = FocusNode();
   final FocusNode _passwordFocus = FocusNode();
 
@@ -46,7 +47,6 @@ class _LoginFormState extends State<LoginForm> {
             context.go('/home');
           }
           if (state is LoginError) {
-            // TODO: Respon jika login gagal/error di sini
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
@@ -241,7 +241,6 @@ class _LoginFormState extends State<LoginForm> {
       FocusScope.of(context).requestFocus(_emailFocus);
       return;
     }
-
     if (_passwordError != null) {
       FocusScope.of(context).requestFocus(_passwordFocus);
       return;
@@ -251,18 +250,5 @@ class _LoginFormState extends State<LoginForm> {
           credential: _emailController.text.trim(),
           password: _passwordController.text.trim(),
         );
-
-    // setState(() {
-    //   _isLoading = true;
-    // });
-
-    // //ini loading ceritanya :)
-    // await Future.delayed(Duration(seconds: 2));
-
-    // setState(() {
-    //   _isLoading = false;
-    // });
-
-    // context.go('/home');
   }
 }
