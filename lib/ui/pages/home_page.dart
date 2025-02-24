@@ -6,7 +6,6 @@ import 'package:lovify_android/configs/app_colors.dart';
 import 'package:lovify_android/cubits/home_cubit/home_cubit.dart';
 import 'package:lovify_android/data/vendor_categories_data.dart';
 import 'package:lovify_android/models/vendor_category_model.dart';
-import 'package:lovify_android/util/manage_token.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomePage extends StatefulWidget {
@@ -24,120 +23,295 @@ class _HomePageState extends State<HomePage> {
 
   int _currentPage = 0;
 
+  int _currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => HomeCubit(),
       child: BlocConsumer<HomeCubit, HomeState>(
         listener: (context, state) {
-          if (context.read<HomeCubit>().categories.isEmpty &&
-              state is HomeIdle) {
-            context.read<HomeCubit>().getCategories();
-          }
-          if (state is CategoriesError) {
-            // TODO: error get kategori di sini
-            showDialog(
-              context: context,
-              builder: (context) => Dialog(
-                child: Text(
-                  state.respond.message.toString(),
-                ),
-              ),
-            );
-          }
+          // TODO: implement listener
         },
         builder: (context, state) {
-          if (context.read<HomeCubit>().categories.isEmpty) {
-            context.read<HomeCubit>().getCategories();
-          }
           return SafeArea(
             left: false,
             right: false,
             bottom: false,
             child: Scaffold(
-              resizeToAvoidBottomInset: false,
-              floatingActionButton: IconButton(
-                onPressed: () => ManageToken.deleteToken(),
-                icon: Icon(Icons.refresh),
+              bottomNavigationBar: BottomNavigationBar(
+                currentIndex: _currentIndex,
+                onTap: (index) => setState(() => _currentIndex = index),
+                unselectedItemColor: AppColors.spaceCadet,
+                selectedFontSize: 14,
+                unselectedFontSize: 14,
+                unselectedLabelStyle: GoogleFonts.plusJakartaSans(
+                  textStyle: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.spaceCadet,
+                  ),
+                ),
+                selectedLabelStyle: GoogleFonts.plusJakartaSans(
+                  textStyle: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.deepRed,
+                  ),
+                ),
+                selectedItemColor: AppColors.deepRed,
+                type: BottomNavigationBarType.fixed,
+                items: [
+                  BottomNavigationBarItem(
+                    icon: Icon(
+                      Icons.home,
+                      size: 32,
+                    ),
+                    label: 'Home',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(
+                      Icons.store,
+                      size: 32,
+                    ),
+                    label: 'Vendors',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(
+                      Icons.edit_calendar,
+                      size: 32,
+                    ),
+                    label: 'Plan',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(
+                      Icons.assignment,
+                      size: 32,
+                    ),
+                    label: 'Order',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(
+                      Icons.account_circle,
+                      size: 32,
+                    ),
+                    label: 'Profile',
+                  ),
+                ],
               ),
+              resizeToAvoidBottomInset: false,
               body: Padding(
                 padding: const EdgeInsets.only(
-                  left: 32,
-                  right: 32,
+                  left: 24,
                   top: 20,
                 ),
-                child: state is HomeLoading
-                    ? Center(
-                        child: CircularProgressIndicator(
-                          color: AppColors.deepRed,
-                        ),
-                      )
-                    : RefreshIndicator(
-                        onRefresh: () async {
-                          context.read<HomeCubit>().getCategories();
-                        },
-                        child: ListView(
-                          scrollDirection: Axis.vertical,
-                          children: [
-                            appBar(),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            SearchBar(
-                              backgroundColor:
-                                  WidgetStatePropertyAll(AppColors.whiteSmoke),
-                              enabled: false,
-                              leading: Icon(
+                child: RefreshIndicator(
+                  onRefresh: () async {},
+                  child: ListView(
+                    scrollDirection: Axis.vertical,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 24),
+                        child: appBar(),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 24),
+                        child: SizedBox(
+                          height: 35,
+                          child: TextField(
+                            decoration: InputDecoration(
+                              hintStyle: TextStyle(fontSize: 14),
+                              contentPadding: EdgeInsets.only(left: 4),
+                              prefixIcon: Icon(
                                 Icons.search,
-                                color: AppColors.spaceCadet,
+                                size: 18,
                               ),
-                              side: WidgetStatePropertyAll(
-                                BorderSide(
-                                  color: AppColors.spaceCadet,
-                                  width: 2,
-                                ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(64),
                               ),
                             ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            highlightCarousel(),
-                            categoriesListView(),
-                            articleListView(),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Text(
-                                  'Recommended for you!',
-                                  style: GoogleFonts.plusJakartaSans(
-                                    textStyle: titleTextStyle(),
-                                  ),
-                                ),
-                                GridView.builder(
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                  ),
-                                  itemCount: 8,
-                                  shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemBuilder:
-                                      (BuildContext context, int index) =>
-                                          placeholderContainer(),
-                                ),
-                              ],
-                            ),
-                          ],
+                          ),
                         ),
                       ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 24),
+                        child: highlightCarousel(),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      categoriesListView(),
+                      articleListView(),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8),
+                            child: Text(
+                              'Recommended for you!',
+                              style: GoogleFonts.plusJakartaSans(
+                                textStyle: titleTextStyle(),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 24),
+                            child: GridView.builder(
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2, mainAxisExtent: 250),
+                              itemCount: 8,
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemBuilder: (BuildContext context, int index) =>
+                                  vendorContainer(),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
           );
         },
+      ),
+    );
+  }
+
+  Padding vendorContainer() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: SizedBox(
+        width: 250,
+        height: 125,
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: AppColors.lightGray,
+              width: 1,
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 150,
+                child: Stack(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      color: AppColors.lightGray,
+                      child: Image.asset(
+                        'assets/images/lovify-logo.png',
+                        scale: 3,
+                      ),
+                    ),
+                    Positioned(
+                        top: 110,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            width: 60,
+                            height: 20,
+                            decoration: BoxDecoration(
+                                color: AppColors.whiteSmoke,
+                                borderRadius: BorderRadius.circular(12)),
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 4),
+                                  child: Icon(
+                                    Icons.location_pin,
+                                    size: 14,
+                                    color: AppColors.deepRed,
+                                  ),
+                                ),
+                                Text(
+                                  'Jakarta',
+                                  style: GoogleFonts.plusJakartaSans(
+                                    textStyle: TextStyle(
+                                      fontSize: 10,
+                                      color: AppColors.deepRed,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Wedding Dress Package',
+                          style: GoogleFonts.plusJakartaSans(
+                            textStyle: TextStyle(
+                              fontSize: 12,
+                              color: AppColors.spaceCadet,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'By wirantikurniabride',
+                          style: GoogleFonts.plusJakartaSans(
+                            textStyle: TextStyle(
+                              fontSize: 8,
+                              color: AppColors.spaceCadet,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 18,
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Rp. 10.000.000',
+                          style: GoogleFonts.plusJakartaSans(
+                            textStyle: TextStyle(
+                              fontSize: 12,
+                              color: AppColors.deepRed,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -147,10 +321,13 @@ class _HomePageState extends State<HomePage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Text(
-          'Wedding Ideas',
-          style: GoogleFonts.plusJakartaSans(
-            textStyle: titleTextStyle(),
+        Padding(
+          padding: const EdgeInsets.only(left: 4),
+          child: Text(
+            'Wedding Ideas',
+            style: GoogleFonts.plusJakartaSans(
+              textStyle: titleTextStyle(),
+            ),
           ),
         ),
         SizedBox(
@@ -158,30 +335,83 @@ class _HomePageState extends State<HomePage> {
         ),
         LimitedBox(
           maxWidth: 327,
-          maxHeight: 211,
+          maxHeight: 230,
           child: ListView.builder(
+            padding: EdgeInsets.zero,
             scrollDirection: Axis.horizontal,
             physics: BouncingScrollPhysics(),
             controller: _articleScrollController,
             itemCount: 3,
-            itemBuilder: (context, index) => placeholderContainer(),
+            itemBuilder: (context, index) => articleContainer(),
           ),
         ),
       ],
     );
   }
 
-  Padding placeholderContainer() {
+  Padding articleContainer() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: Container(
           width: 245,
-          height: 211,
-          color: AppColors.lightGray,
-          child: Image.asset(
-            'assets/images/lovify-logo.png',
+          height: 230,
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: AppColors.lightGray,
+              width: 1,
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Column(
+            children: [
+              SizedBox(
+                width: 245,
+                height: 120,
+                child: Container(
+                  color: AppColors.lightGray,
+                  child: Image.asset(
+                    'assets/images/lovify-logo.png',
+                    scale: 3,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Wedding preparation',
+                        style: GoogleFonts.plusJakartaSans(
+                          textStyle: TextStyle(
+                            fontSize: 12,
+                            color: AppColors.deepRed,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 4,
+                    ),
+                    Text(
+                      'Tampil Beda! Pakai Kebaya Modern dan Unik, Siap Buat Hari Spesialmu Makin Cantik!',
+                      style: GoogleFonts.plusJakartaSans(
+                        textStyle: TextStyle(
+                          fontSize: 12,
+                          color: AppColors.spaceCadet,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      textAlign: TextAlign.start,
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -193,24 +423,34 @@ class _HomePageState extends State<HomePage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Text(
-          'Vendor Category',
-          style: GoogleFonts.plusJakartaSans(
-            textStyle: titleTextStyle(),
+        Padding(
+          padding: const EdgeInsets.only(left: 4),
+          child: Text(
+            'Vendor Category',
+            style: GoogleFonts.plusJakartaSans(
+              textStyle: titleTextStyle(),
+            ),
           ),
         ),
-        LimitedBox(
-          maxWidth: 327,
-          maxHeight: 100,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            physics: BouncingScrollPhysics(),
-            controller: _categoriesScrollController,
-            itemCount: VendorCategoriesData().vendorCategories.length,
-            itemBuilder: (context, index) {
-              final data = VendorCategoriesData().vendorCategories[index];
-              return categoryButton(data);
-            },
+        Padding(
+          padding: EdgeInsets.zero,
+          child: LimitedBox(
+            maxHeight: 100,
+            child: Padding(
+              padding: EdgeInsets.zero,
+              child: ListView.builder(
+                padding: EdgeInsets.zero,
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                physics: BouncingScrollPhysics(),
+                controller: _categoriesScrollController,
+                itemCount: VendorCategoriesData().vendorCategories.length,
+                itemBuilder: (context, index) {
+                  final data = VendorCategoriesData().vendorCategories[index];
+                  return categoryButton(data);
+                },
+              ),
+            ),
           ),
         ),
       ],
@@ -227,7 +467,7 @@ class _HomePageState extends State<HomePage> {
 
   Padding categoryButton(VendorCategoryModel data) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -236,7 +476,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {},
             icon: data.icon,
             style: ButtonStyle(
-              minimumSize: WidgetStatePropertyAll(Size(45, 45)),
+              minimumSize: WidgetStatePropertyAll(Size(50, 50)),
               backgroundColor: WidgetStatePropertyAll(AppColors.deepRed),
             ),
           ),
@@ -258,36 +498,39 @@ class _HomePageState extends State<HomePage> {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        CarouselSlider.builder(
-          itemCount: 3,
-          itemBuilder: (context, index, realIndex) => ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Container(
-              width: 327,
-              height: 146,
-              color: AppColors.lightGray,
-              child: Image.asset(
-                'assets/images/lovify-logo.png',
-                scale: 1.8,
+        Padding(
+          padding: const EdgeInsets.only(right: 0),
+          child: CarouselSlider.builder(
+            itemCount: 3,
+            itemBuilder: (context, index, realIndex) => ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Container(
+                width: 350,
+                height: 146,
+                color: AppColors.lightGray,
+                child: Image.asset(
+                  'assets/images/lovify-logo.png',
+                  scale: 1.8,
+                ),
               ),
             ),
+            options: CarouselOptions(
+              height: 146,
+              enlargeCenterPage: true,
+              viewportFraction: 1,
+              scrollDirection: Axis.horizontal,
+              scrollPhysics: BouncingScrollPhysics(),
+              enableInfiniteScroll: true,
+              autoPlay: true,
+              autoPlayAnimationDuration: Duration(seconds: 2),
+              autoPlayInterval: Duration(seconds: 5),
+              pauseAutoPlayOnManualNavigate: true,
+              pauseAutoPlayOnTouch: true,
+              onPageChanged: (index, reason) =>
+                  setState(() => _currentPage = index),
+            ),
+            carouselController: _carouselSliderController,
           ),
-          options: CarouselOptions(
-            height: 146,
-            enlargeCenterPage: true,
-            viewportFraction: 0.9,
-            scrollDirection: Axis.horizontal,
-            scrollPhysics: BouncingScrollPhysics(),
-            enableInfiniteScroll: true,
-            autoPlay: true,
-            autoPlayAnimationDuration: Duration(seconds: 2),
-            autoPlayInterval: Duration(seconds: 5),
-            pauseAutoPlayOnManualNavigate: true,
-            pauseAutoPlayOnTouch: true,
-            onPageChanged: (index, reason) =>
-                setState(() => _currentPage = index),
-          ),
-          carouselController: _carouselSliderController,
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -297,9 +540,9 @@ class _HomePageState extends State<HomePage> {
             onDotClicked: (index) => setState(
               () => _carouselSliderController.jumpToPage(index),
             ),
-            effect: ExpandingDotsEffect(
+            effect: SlideEffect(
               dotHeight: 8,
-              dotWidth: 14,
+              dotWidth: 8,
               spacing: 8,
               dotColor: AppColors.lightGray,
               activeDotColor: AppColors.deepRed,

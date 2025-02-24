@@ -347,9 +347,11 @@ class _RegisterFormState extends State<RegisterForm> {
               : null);
     });
 
+
     if (_fullNameError == null &&
         _usernameError == null &&
         _phoneError == null &&
+        _emailError == null &&
         _emailError == null &&
         _passwordError == null &&
         _passwordConfirmError == null) {

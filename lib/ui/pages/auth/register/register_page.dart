@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:keyboard_avoider/keyboard_avoider.dart';
 import 'package:lovify_android/ui/pages/auth/register/register_form.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -12,18 +13,16 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      left: false,
-      right: false,
-      bottom: false,
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Padding(
+    return Scaffold(
+      body: KeyboardAvoider(
+        autoScroll: true,
+        child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32),
-          child: ListView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: 150,
+                height: 100,
               ),
               Image.asset(
                 "assets/images/lovify-logo.png",
@@ -47,7 +46,7 @@ class _RegisterPageState extends State<RegisterPage> {
               RegisterForm(),
               SizedBox(
                 height: 20,
-              ),
+              ),  
             ],
           ),
         ),
