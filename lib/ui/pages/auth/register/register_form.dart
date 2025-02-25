@@ -348,7 +348,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     ),
                   )
                 ],
-              )
+              ),
             ],
           );
         },
@@ -375,14 +375,38 @@ class _RegisterFormState extends State<RegisterForm> {
           ? "Password confirmation is required"
           : (_passwordConfirmController.text.trim() !=
                   _passwordController.text.trim()
-              ? "Passwords do not match"
+              ? "Password not match"
               : null);
     });
+
+    if (_fullNameError != null) {
+      FocusScope.of(context).requestFocus(_fullNameFocus);
+      return;
+    }
+    if (_usernameError != null) {
+      FocusScope.of(context).requestFocus(_usernameFocus);
+      return;
+    }
+    if (_phoneError != null) {
+      FocusScope.of(context).requestFocus(_phoneFocus);
+      return;
+    }
+    if (_emailError != null) {
+      FocusScope.of(context).requestFocus(_emailFocus);
+      return;
+    }
+    if (_passwordError != null) {
+      FocusScope.of(context).requestFocus(_passwordFocus);
+      return;
+    }
+    if (_passwordConfirmError != null) {
+      FocusScope.of(context).requestFocus(_passwordConfirmFocus);
+      return;
+    }
 
     if (_fullNameError == null &&
         _usernameError == null &&
         _phoneError == null &&
-        _emailError == null &&
         _emailError == null &&
         _passwordError == null &&
         _passwordConfirmError == null) {

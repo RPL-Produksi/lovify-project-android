@@ -18,8 +18,6 @@ class _LoginFormState extends State<LoginForm> {
   String? _emailError;
   String? _passwordError;
 
-  // bool _isLoading = false;
-
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -212,7 +210,7 @@ class _LoginFormState extends State<LoginForm> {
                         ),
                       ),
                     ),
-                  )
+                  ),
                 ],
               )
             ],
