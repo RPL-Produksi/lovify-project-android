@@ -1,5 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -86,6 +87,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 "Full Name",
                 style: GoogleFonts.plusJakartaSans(
                   textStyle: TextStyle(
+                    color: AppColors.deepRed,
                     fontSize: 14,
                   ),
                 ),
@@ -117,6 +119,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 "Username",
                 style: GoogleFonts.plusJakartaSans(
                   textStyle: TextStyle(
+                    color: AppColors.deepRed,
                     fontSize: 14,
                   ),
                 ),
@@ -148,6 +151,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 "Phone Number",
                 style: GoogleFonts.plusJakartaSans(
                   textStyle: TextStyle(
+                    color: AppColors.deepRed,
                     fontSize: 14,
                   ),
                 ),
@@ -159,13 +163,16 @@ class _RegisterFormState extends State<RegisterForm> {
                 controller: _phoneController,
                 focusNode: _phoneFocus,
                 keyboardType: TextInputType.phone,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
                   hintText: 'Phone Number',
                   prefixIcon: Icon(
-                    Icons.phone,
+                    Icons.phone
                   ),
                   errorText: _phoneError,
                   hintStyle: GoogleFonts.plusJakartaSans(
@@ -182,6 +189,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 "Email",
                 style: GoogleFonts.plusJakartaSans(
                   textStyle: TextStyle(
+                    color: AppColors.deepRed,
                     fontSize: 14,
                   ),
                 ),
@@ -199,7 +207,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   ),
                   hintText: 'Email',
                   prefixIcon: Icon(
-                    Icons.mail,
+                    Icons.mail
                   ),
                   errorText: _emailError,
                   hintStyle: GoogleFonts.plusJakartaSans(
@@ -216,6 +224,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 "Password",
                 style: GoogleFonts.plusJakartaSans(
                   textStyle: TextStyle(
+                    color: AppColors.deepRed,
                     fontSize: 14,
                   ),
                 ),
@@ -260,6 +269,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 "Password Confirmation",
                 style: GoogleFonts.plusJakartaSans(
                   textStyle: TextStyle(
+                    color: AppColors.deepRed,
                     fontSize: 14,
                   ),
                 ),
