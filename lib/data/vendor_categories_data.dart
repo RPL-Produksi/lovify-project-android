@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lovify_android/configs/app_colors.dart';
-import 'package:lovify_android/models/vendor_category_model.dart';
+import 'package:lovify_android/models/category_model/vendor_category_model.dart';
 
 class VendorCategoriesData {
   final List<VendorCategoryModel> vendorCategories = [

@@ -127,12 +127,8 @@ class _OnBoardPageState extends State<OnBoardPage> {
                 scrollDirection: Axis.horizontal, // Horizontal scrolling
                 scrollPhysics: BouncingScrollPhysics(),
                 enableInfiniteScroll: false,
-
-                onPageChanged: (index, reason) {
-                  setState(() {
-                    _currentPage = index;
-                  });
-                },
+                onPageChanged: (index, reason) =>
+                    setState(() => _currentPage = index),
               ),
               carouselController: _carouselController,
             ),
@@ -142,12 +138,14 @@ class _OnBoardPageState extends State<OnBoardPage> {
             child: AnimatedSmoothIndicator(
               activeIndex: _currentPage, // The controller used by the carousel
               count: 3, // Number of pages
+              onDotClicked: (index) =>
+                  setState(() => _carouselController.jumpToPage(index)),
               effect: ExpandingDotsEffect(
                 dotHeight: 8.0,
                 dotWidth: 14.0,
                 spacing: 8.0,
-                dotColor: const Color.fromARGB(255, 212, 212, 212),
-                activeDotColor: const Color(0xFF67191F),
+                dotColor: AppColors.lightGray,
+                activeDotColor: AppColors.deepRed,
               ),
             ),
           ),

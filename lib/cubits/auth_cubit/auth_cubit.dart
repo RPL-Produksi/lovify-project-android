@@ -8,7 +8,7 @@ import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 import '../../models/api_error_respond_model/api_error_respond_model.dart';
 import '../../models/auth/login_model.dart';
 import '../../models/auth/register_model.dart';
-import '../../models/auth_respond_model.dart';
+import '../../models/auth/auth_respond_model.dart';
 import '../../service/api/api_controller.dart';
 import '../../service/api/api_helper.dart';
 import '../../util/manage_token.dart';

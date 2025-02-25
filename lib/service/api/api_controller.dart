@@ -24,10 +24,14 @@ class ApiController {
     return exception.apiException(ex);
   }
 
-  static Future getData(String url) async {
+  static Future getData({
+    required String url,
+    Map<String, dynamic>? params,
+  }) async {
     try {
       final respond = await dio.get(
         url,
+        queryParameters: params,
         options: token != null
             ? Options(headers: {'Authorization': 'Bearer $token'})
             : null,
@@ -41,8 +45,11 @@ class ApiController {
     }
   }
 
-  static Future postData(String url,
-      [dynamic data, String? extraHeaders]) async {
+  static Future postData({
+    required String url,
+    dynamic data,
+    String? extraHeaders,
+  }) async {
     try {
       final respond = await dio.post(
         url,
@@ -54,6 +61,19 @@ class ApiController {
               )
             : null,
       );
+      return respond.data;
+    } on DioException catch (e) {
+      final error = checkException(e);
+      return ApiErrorRespondModel.fromMap(error);
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  static Future deleteData(
+      {required String url, Map<String, dynamic>? params}) async {
+    try {
+      final respond = await dio.delete(url, queryParameters: params);
       return respond.data;
     } on DioException catch (e) {
       final error = checkException(e);
