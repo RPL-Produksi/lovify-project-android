@@ -370,6 +370,7 @@ class _RegisterFormState extends State<RegisterForm> {
     setState(() {
       _fullNameError =
           _fullNameController.text.isEmpty ? "Full name is required" : null;
+          _fullNameController.text.isEmpty ? "Full name is required" : null;
       _usernameError =
           _usernameController.text.isEmpty ? "Username is required" : null;
       _phoneError =

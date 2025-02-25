@@ -90,41 +90,45 @@ class _VerifyPageState extends State<VerifyPage> {
             ),
             Row(
               children: [
-                Container(
-                  decoration: BoxDecoration(boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.2), // Shadow color
-                      spreadRadius: 1, // Spread of the shadow
-                      blurRadius: 5, // Blur effect
-                      offset: Offset(3, 3), // X & Y axis shadow position
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2), // Shadow color
+                        spreadRadius: 1, // Spread of the shadow
+                        blurRadius: 5, // Blur effect
+                        offset: Offset(3, 3), // X & Y axis shadow position
+                      ),
+                    ], borderRadius: BorderRadius.circular(12)),
+                    child: PrimaryButton(
+                      text: 'Resend link',
+                      onPressed: () {},
+                      width: double.infinity,
                     ),
-                  ], borderRadius: BorderRadius.circular(12)),
-                  child: PrimaryButton(
-                    text: 'Resend link',
-                    onPressed: () {},
-                    width: 140,
                   ),
                 ),
                 SizedBox(
                   width: 15,
                 ),
-                Container(
-                  decoration: BoxDecoration(boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.2), // Shadow color
-                      spreadRadius: 1, // Spread of the shadow
-                      blurRadius: 5, // Blur effect
-                      offset: Offset(3, 3), // X & Y axis shadow position
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2), // Shadow color
+                        spreadRadius: 1, // Spread of the shadow
+                        blurRadius: 5, // Blur effect
+                        offset: Offset(3, 3), // X & Y axis shadow position
+                      ),
+                    ], borderRadius: BorderRadius.circular(12)),
+                    child: PrimaryButton(
+                      text: 'Next',
+                      onPressed: () {
+                        context.go('/verifySuccess');
+                      },
+                      backgroundColor: AppColors.deepRed,
+                      textColor: AppColors.whiteSmoke,
+                      width: double.infinity,
                     ),
-                  ], borderRadius: BorderRadius.circular(12)),
-                  child: PrimaryButton(
-                    text: 'Next',
-                    onPressed: () {
-                      context.go('/verifySuccess');
-                    },
-                    backgroundColor: AppColors.deepRed,
-                    textColor: AppColors.whiteSmoke,
-                    width: 140,
                   ),
                 ),
               ],
