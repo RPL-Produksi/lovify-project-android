@@ -38,9 +38,6 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/lovify-logo.png
-    - assets/images/onboard-bg.png
-    - assets/images/onboard-fade.png
-    - assets/fonts/Charm-Bold.ttf
-    - assets/fonts/Charm-Regular.ttf
+    - assets/images/
+    - assets/fonts/
     - assets/lottie/

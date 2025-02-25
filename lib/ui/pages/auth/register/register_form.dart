@@ -64,7 +64,7 @@ class _RegisterFormState extends State<RegisterForm> {
           ),
         ),
         SizedBox(
-          height: 16,
+          height: 10,
         ),
         Text(
           "Username",
@@ -95,7 +95,7 @@ class _RegisterFormState extends State<RegisterForm> {
           ),
         ),
         SizedBox(
-          height: 16,
+          height: 10,
         ),
         Text(
           "Phone Number",
@@ -130,7 +130,7 @@ class _RegisterFormState extends State<RegisterForm> {
           ),
         ),
         SizedBox(
-          height: 16,
+          height: 10,
         ),
         Text(
           "Email",
@@ -164,7 +164,7 @@ class _RegisterFormState extends State<RegisterForm> {
           ),
         ),
         SizedBox(
-          height: 16,
+          height: 10,
         ),
         Text(
           "Password",
@@ -208,7 +208,7 @@ class _RegisterFormState extends State<RegisterForm> {
           ),
         ),
         SizedBox(
-          height: 16,
+          height: 10,
         ),
         Text(
           "Password Confirmation",
@@ -257,7 +257,9 @@ class _RegisterFormState extends State<RegisterForm> {
         PrimaryButton(
           text: "Sign Up",
           onPressed: () {
-            validateAndSubmit();
+            //JANGAN LUPA DI UNCOMMENT
+            // validateAndSubmit();
+            context.go('/verify');
           },
           backgroundColor: AppColors.deepRed,
           textColor: Colors.white,

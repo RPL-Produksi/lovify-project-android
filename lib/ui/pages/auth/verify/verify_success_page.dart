@@ -20,7 +20,7 @@ class VerifySuccessPage extends StatelessWidget {
               width: 160,
               repeat: false,
               onLoaded: (p0) {
-                Future.delayed(Duration(seconds: 2), (){
+                Future.delayed(Duration(seconds: 3), (){
                   context.go('/home');
                 });
               },

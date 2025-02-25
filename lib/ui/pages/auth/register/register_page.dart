@@ -38,14 +38,14 @@ class _RegisterPageState extends State<RegisterPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: 100,
+              height: 70,
             ),
             Image.asset(
               "assets/images/lovify-logo.png",
               width: 100,
             ),
             SizedBox(
-              height: 20,
+              height: 10,
             ),
             Text(
               "Sign Up to Make Account",
