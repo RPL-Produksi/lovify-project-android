@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lovify_android/configs/app_colors.dart';
@@ -111,13 +112,16 @@ class _RegisterFormState extends State<RegisterForm> {
         TextField(
           controller: _phoneController,
           keyboardType: TextInputType.phone,
+          inputFormatters: [
+            FilteringTextInputFormatter.digitsOnly,
+          ],
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
             ),
             hintText: 'Phone Number',
             errorText: _phoneError,
-            prefixIcon: Icon(Icons.account_circle_rounded),
+            prefixIcon: Icon(Icons.phone),
             hintStyle: GoogleFonts.plusJakartaSans(
               textStyle: TextStyle(
                 fontSize: 14,
@@ -149,7 +153,7 @@ class _RegisterFormState extends State<RegisterForm> {
             ),
             hintText: 'Email',
             prefixIcon: Icon(
-              Icons.phone,
+              Icons.email,
             ),
             errorText: _emailError,
             hintStyle: GoogleFonts.plusJakartaSans(
@@ -322,7 +326,7 @@ class _RegisterFormState extends State<RegisterForm> {
         _emailError == null &&
         _passwordError == null &&
         _passwordConfirmError == null) {
-      print("Proceed with registration");
+      context.go('/verify');
     }
   }
 }
