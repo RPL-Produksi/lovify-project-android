@@ -301,7 +301,7 @@ class _RegisterFormState extends State<RegisterForm> {
   void validateAndSubmit() {
     setState(() {
       _fullNameError =
-          _fullNameController.text.isEmpty ? "Full name is required" : null;  
+          _fullNameController.text.isEmpty ? "Full name is required" : null;
       _usernameError =
           _usernameController.text.isEmpty ? "Username is required" : null;
       _phoneError =
@@ -325,7 +325,9 @@ class _RegisterFormState extends State<RegisterForm> {
         _phoneError == null &&
         _emailError == null &&
         _passwordError == null &&
-        _passwordConfirmError == null) {
+        _passwordConfirmError == null &&
+        _passwordController.text.length >= 8 &&
+        _passwordConfirmController.text.length >= 8) {
       context.go('/verify');
     }
   }

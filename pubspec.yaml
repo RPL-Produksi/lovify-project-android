@@ -28,6 +28,7 @@ dependencies:
   email_validator: ^3.0.0
   image_picker: ^1.1.2
   phone_numbers_parser: ^9.0.3
+  lottie: ^3.3.1
 
 dev_dependencies:
   flutter_lints: ^5.0.0
@@ -42,3 +43,4 @@ flutter:
     - assets/images/onboard-fade.png
     - assets/fonts/Charm-Bold.ttf
     - assets/fonts/Charm-Regular.ttf
+    - assets/lottie/
