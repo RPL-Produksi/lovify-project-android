@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lovify_android/ui/pages/auth/register/register_form.dart';
@@ -11,37 +10,22 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  bool _isDebug = kDebugMode;
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //error di debug only
-      body: kReleaseMode ? KeyboardAvoider(
-        autoScroll: true,
-        child: _buildContent(),
-      ) : _buildContent(),
-    );
-  }
-
-  Padding _buildContent() {
-    return Padding(
+      body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
           children: [
             SizedBox(
-              height: 100,
+              height: 60,
             ),
-            Image.asset(
-              "assets/images/lovify-logo.png",
-              width: 100,
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Image.asset(
+                "assets/images/lovify-logo.png",
+                width: 100,
+              ),
             ),
             SizedBox(
               height: 20,
@@ -64,6 +48,7 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
           ],
         ),
-      );
+      ),
+    );
   }
 }

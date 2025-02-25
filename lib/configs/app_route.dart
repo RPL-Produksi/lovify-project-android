@@ -1,8 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:lovify_android/ui/pages/auth/login/login_page.dart';
 import 'package:lovify_android/ui/pages/auth/register/register_page.dart';
-import 'package:lovify_android/ui/pages/auth/verify/verify_page.dart';
-import 'package:lovify_android/ui/pages/auth/verify/verify_success_page.dart';
 import 'package:lovify_android/ui/pages/home_page.dart';
 import 'package:lovify_android/ui/pages/onboard_page.dart';
 
@@ -42,16 +40,6 @@ class AppRoute {
           path: '/home',
           name: 'home',
           builder: (context, state) => const HomePage(),
-        ),
-        GoRoute(
-          path: '/verify',
-          name: 'verify',
-          builder: (context, state) => const VerifyPage(),
-        ),
-        GoRoute(
-          path: '/verifySuccess',
-          name: 'verifySuccess',
-          builder: (context, state) => const VerifySuccessPage(),
-        ),
+        )
       ];
 }
