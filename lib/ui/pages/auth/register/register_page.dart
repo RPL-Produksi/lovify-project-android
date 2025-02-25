@@ -45,7 +45,7 @@ class _RegisterPageState extends State<RegisterPage> {
             RegisterForm(),
             SizedBox(
               height: 20,
-            ),  
+            ),
           ],
         ),
       ),
