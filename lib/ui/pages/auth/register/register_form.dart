@@ -1,6 +1,5 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -91,74 +90,39 @@ class _RegisterFormState extends State<RegisterForm> {
                   ),
                 ),
               ),
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 16,
-        ),
-        Text(
-          "Phone Number",
-          style: GoogleFonts.plusJakartaSans(
-            textStyle: TextStyle(
-              color: AppColors.deepRed,
-              fontSize: 14,
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 4,
-        ),
-        TextField(
-          controller: _phoneController,
-          keyboardType: TextInputType.phone,
-          inputFormatters: [
-            FilteringTextInputFormatter.digitsOnly,
-          ],
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            hintText: 'Phone Number',
-            errorText: _phoneError,
-            prefixIcon: Icon(Icons.phone),
-            hintStyle: GoogleFonts.plusJakartaSans(
-              textStyle: TextStyle(
-                fontSize: 14,
+              SizedBox(
+                height: 4,
               ),
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 16,
-        ),
-        Text(
-          "Email",
-          style: GoogleFonts.plusJakartaSans(
-            textStyle: TextStyle(
-              color: AppColors.deepRed,
-              fontSize: 14,
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 4,
-        ),
-        TextField(
-          controller: _emailController,
-          keyboardType: TextInputType.emailAddress,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            hintText: 'Email',
-            prefixIcon: Icon(
-              Icons.email,
-            ),
-            errorText: _emailError,
-            hintStyle: GoogleFonts.plusJakartaSans(
-              textStyle: TextStyle(
-                fontSize: 14,
+              TextField(
+                controller: _fullNameController,
+                focusNode: _fullNameFocus,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  hintText: 'Full Name',
+                  errorText: _fullNameError,
+                  prefixIcon: Icon(Icons.person),
+                  hintStyle: GoogleFonts.plusJakartaSans(
+                    textStyle: TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              Text(
+                "Username",
+                style: GoogleFonts.plusJakartaSans(
+                  textStyle: TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 4,
               ),
               TextField(
                 controller: _usernameController,
