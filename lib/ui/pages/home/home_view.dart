@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lovify_android/data/vendor_categories_data.dart';
 import 'package:lovify_android/ui/styles/styles.dart';
-import 'package:lovify_android/ui/widgets/app_bar.dart';
 import 'package:lovify_android/ui/widgets/article_container.dart';
 import 'package:lovify_android/ui/widgets/category_button.dart';
 import 'package:lovify_android/ui/widgets/highlight_carousel.dart';
@@ -16,8 +15,8 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  ScrollController _articleScrollController = ScrollController();
-  ScrollController _categoriesScrollController = ScrollController();
+  final ScrollController _articleScrollController = ScrollController();
+  final ScrollController _categoriesScrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +30,6 @@ class _HomeViewState extends State<HomeView> {
         child: ListView(
           scrollDirection: Axis.vertical,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 24),
-              child: appBar(),
-            ),
             SizedBox(
               height: 10,
             ),

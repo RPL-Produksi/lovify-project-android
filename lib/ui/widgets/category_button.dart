@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lovify_android/configs/app_colors.dart';
-import 'package:lovify_android/models/vendor_category_model.dart';
+import 'package:lovify_android/models/category_model/vendor_category_model.dart';
 
 Padding categoryButton(VendorCategoryModel data) {
     return Padding(

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,8 +21,8 @@ class VerifySuccessPage extends StatelessWidget {
               frameRate: FrameRate(60),
               width: 160,
               repeat: false,
-              onLoaded: (p0) {
-                Future.delayed(Duration(seconds: 2), (){
+              onLoaded: (_) {
+                Timer(const Duration(seconds: 2), () {
                   context.go('/home');
                 });
               },

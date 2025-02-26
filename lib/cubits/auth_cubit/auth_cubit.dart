@@ -16,6 +16,8 @@ import '../../util/manage_token.dart';
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
+  AuthRespondModel? profile;
+
   AuthCubit() : super(AuthInitial());
 
   void isInit() => emit(AuthInitial());
@@ -52,6 +54,7 @@ class AuthCubit extends Cubit<AuthState> {
     );
     final respond = await ApiHelper.login(loginModel);
     if (respond is AuthRespondModel) {
+      profile = respond;
       ApiController.token = respond.token;
       ManageToken.writeToken();
       emit(LoginSuccess(respond: respond));
@@ -134,15 +137,15 @@ class AuthCubit extends Cubit<AuthState> {
       return;
     }
     emit(AuthLoading());
-    MultipartFile? profile;
+    MultipartFile? image;
     if (avatar != null) {
-      profile = await MultipartFile.fromFile(
+      image = await MultipartFile.fromFile(
         avatar.path,
         filename: avatar.name.split('/').last,
       );
     }
     final registerModel = RegisterModel(
-      avatar: profile,
+      avatar: image,
       fullname: fullname,
       username: username,
       password: password,
@@ -153,6 +156,7 @@ class AuthCubit extends Cubit<AuthState> {
     final formData = FormData.fromMap(registerModel.toMap());
     final respond = await ApiHelper.register(formData);
     if (respond is AuthRespondModel) {
+      profile = respond;
       ApiController.token = respond.token;
       ManageToken.writeToken();
       emit(RegisterSuccess(respond: respond));
@@ -173,6 +177,74 @@ class AuthCubit extends Cubit<AuthState> {
     } else {
       ManageToken.deleteToken();
       emit(LogoutSuccess());
+    }
+  }
+
+  void getProfile() async {
+    if (ApiController.token.toString().isEmpty) {
+      emit(
+        ProfileError(
+          respond: ApiErrorRespondModel(
+            status: 'Failed',
+            message: 'Unauthenticated',
+          ),
+        ),
+      );
+      return;
+    }
+    emit(AuthLoading());
+    final respond = await ApiHelper.getProfile();
+    if (respond is AuthRespondModel) {
+      profile = respond;
+      emit(ProfileSuccess(respond: respond));
+      return;
+    }
+    if (respond is ApiErrorRespondModel) {
+      emit(ProfileError(respond: respond));
+      return;
+    }
+  }
+
+  void editProfile({
+    XFile? avatar,
+    String? username,
+    String? email,
+    String? phoneNumber,
+  }) async {
+    if (ApiController.token.toString().isEmpty) {
+      emit(
+        ProfileError(
+          respond: ApiErrorRespondModel(
+            status: 'Failed',
+            message: 'Unauthenticated',
+          ),
+        ),
+      );
+      return;
+    }
+    emit(AuthLoading());
+    MultipartFile? image;
+    if (avatar != null) {
+      image = await MultipartFile.fromFile(
+        avatar.path,
+        filename: avatar.name.split('/').last,
+      );
+    }
+    final request = FormData.fromMap({
+      'avatar': image,
+      'username': username,
+      'email': email,
+      'phone_number': phoneNumber,
+    });
+    final respond = await ApiHelper.editProfile(request);
+    if (respond is AuthRespondModel) {
+      profile = respond;
+      emit(ProfileSuccess(respond: respond));
+      return;
+    }
+    if (respond is ApiErrorRespondModel) {
+      emit(ProfileError(respond: respond));
+      return;
     }
   }
 }

@@ -59,3 +59,21 @@ final class LogoutError extends AuthState {
   @override
   List<Object> get props => [respond];
 }
+
+final class ProfileSuccess extends AuthState {
+  final AuthRespondModel respond;
+
+  const ProfileSuccess({required this.respond});
+
+  @override
+  List<Object> get props => [respond];
+}
+
+final class ProfileError extends AuthState {
+  final ApiErrorRespondModel respond;
+
+  const ProfileError({required this.respond});
+
+  @override
+  List<Object> get props => [respond];
+}
