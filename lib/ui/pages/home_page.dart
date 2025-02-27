@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lovify_android/configs/app_colors.dart';
 import 'package:lovify_android/cubits/home_cubit/home_cubit.dart';
 import 'package:lovify_android/ui/pages/home/home_view.dart';
+import 'package:lovify_android/ui/pages/home/vendor_categories_view.dart';
 import 'package:lovify_android/ui/pages/home/vendors_view.dart';
 import 'package:lovify_android/ui/widgets/app_bar.dart';
 
@@ -20,7 +21,7 @@ class _HomePageState extends State<HomePage> {
 
   final List<Widget> _pages = [
     HomeView(),
-    VendorsView()
+    VendorsView(),
   ];
 
   @override

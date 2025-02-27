@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lovify_android/configs/app_colors.dart';
 import 'package:lovify_android/ui/widgets/app_bar.dart';
+import 'package:lovify_android/ui/widgets/vendor_category_container.dart';
 import 'package:lovify_android/ui/widgets/vendor_container.dart';
 
-class VendorsView extends StatefulWidget {
-  const VendorsView({super.key});
+class VendorCategoriesView extends StatefulWidget {
+  const VendorCategoriesView({super.key});
 
   @override
-  State<VendorsView> createState() => _VendorsViewState();
+  State<VendorCategoriesView> createState() => _VendorCategoriesViewState();
 }
 
-class _VendorsViewState extends State<VendorsView> {
+class _VendorCategoriesViewState extends State<VendorCategoriesView> {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
+      onRefresh: () async {},
       child: ListView(
         scrollDirection: Axis.vertical,
         children: [
@@ -32,7 +33,7 @@ class _VendorsViewState extends State<VendorsView> {
             height: 50,
             child: Center(
               child: Text(
-                'VENDORS',
+                'VENDORS CATEGORIES',
                 style: GoogleFonts.cinzelDecorative(
                   textStyle: TextStyle(
                     fontSize: 20,
@@ -51,26 +52,20 @@ class _VendorsViewState extends State<VendorsView> {
             child: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2, // Number of columns
-                crossAxisSpacing: 0, // Spacing between columns
-                mainAxisSpacing: 0, // Spacing between rows
+                crossAxisSpacing: 10, // Spacing between columns
+                mainAxisSpacing: 10, // Spacing between rows
                 childAspectRatio: 1, // Aspect ratio of each item
-                mainAxisExtent: 225,
               ),
               itemCount: 10,
-              scrollDirection: Axis.vertical,
-              physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  child: vendorContainer(),
-                  onTap: () => context.push('/vendorDetail'),
-                );
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (BuildContext context, int index) {
+                return vendorCategoryContainer(text: 'Catering', imagePath: 'assets/images/dress.png');
               },
             ),
           ),
         ],
       ),
-      onRefresh: () async {},
     );
   }
 }

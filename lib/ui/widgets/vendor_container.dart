@@ -4,7 +4,7 @@ import 'package:lovify_android/configs/app_colors.dart';
 
 Padding vendorContainer() {
   return Padding(
-    padding: const EdgeInsets.all(8.0),
+    padding: const EdgeInsets.all(4.0),
     child: SizedBox(
       width: 250,
       height: 125,
@@ -32,7 +32,7 @@ Padding vendorContainer() {
                         color: AppColors.lightGray,
                         width: 1,
                       ),
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
                     ),
                     child: Image.asset(
                       'assets/images/lovify-logo.png',
@@ -110,7 +110,7 @@ Padding vendorContainer() {
                       ),
                     ),
                     SizedBox(
-                      height: 18,
+                      height: 20,
                     ),
                     Align(
                       alignment: Alignment.centerLeft,

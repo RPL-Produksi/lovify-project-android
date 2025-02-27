@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lovify_android/data/vendor_categories_data.dart';
 import 'package:lovify_android/ui/styles/styles.dart';
@@ -86,16 +87,22 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(right: 24),
+                  padding: const EdgeInsets.only(right: 16),
                   child: GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2, mainAxisExtent: 250),
-                    itemCount: 8,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2, // Number of columns
+                      crossAxisSpacing: 0, // Spacing between columns
+                      mainAxisSpacing: 0, // Spacing between rows
+                      childAspectRatio: 1, // Aspect ratio of each item
+                      mainAxisExtent: 225,
+                    ),
+                    itemCount: 5,
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (BuildContext context, int index) =>
-                        vendorContainer(),
+                    itemBuilder: (BuildContext context, int index) => InkWell(
+                      child: vendorContainer(),
+                      onTap: () => context.push('/vendorDetail'),
+                    ),
                   ),
                 ),
               ],

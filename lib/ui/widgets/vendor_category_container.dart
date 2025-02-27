@@ -42,7 +42,7 @@ Stack vendorCategoryContainer({
                           text,
                           style: GoogleFonts.plusJakartaSans(
                             textStyle: TextStyle(
-                              fontSize: 14, // Bisa disesuaikan
+                              fontSize: 16, // Bisa disesuaikan
                               color: AppColors.whiteSmoke,
                               fontWeight: FontWeight.bold,
                             ),
