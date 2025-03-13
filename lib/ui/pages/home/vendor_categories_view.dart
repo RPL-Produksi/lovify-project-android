@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lovify_android/configs/app_colors.dart';
 import 'package:lovify_android/ui/widgets/app_bar.dart';
-import 'package:lovify_android/ui/widgets/vendor_category_container.dart';
-import 'package:lovify_android/ui/widgets/vendor_container.dart';
+import 'package:lovify_android/ui/widgets/product_category_container.dart';
 
 class VendorCategoriesView extends StatefulWidget {
   const VendorCategoriesView({super.key});
@@ -60,7 +59,8 @@ class _VendorCategoriesViewState extends State<VendorCategoriesView> {
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
-                return vendorCategoryContainer(text: 'Catering', imagePath: 'assets/images/dress.png');
+                return productCategoryContainer(
+                    text: 'Catering', imagePath: 'assets/images/dress.png');
               },
             ),
           ),

@@ -37,186 +37,183 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthCubit(),
-      child: BlocConsumer<AuthCubit, AuthState>(
-        listener: (context, state) {
-          if (state is LoginSuccess) {
-            context.go('/home');
-          }
-          if (state is LoginError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  state.respond.message,
-                  textAlign: TextAlign.center,
-                ),
-                duration: Duration(seconds: 2),
-                backgroundColor: AppColors.deepRed,
+    return BlocConsumer<AuthCubit, AuthState>(
+      listener: (context, state) {
+        if (state is LoginSuccess) {
+          context.go('/home');
+        }
+        if (state is LoginError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                state.respond.message,
+                textAlign: TextAlign.center,
               ),
-            );
-          }
-        },
-        builder: (context, state) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Email",
-                style: GoogleFonts.plusJakartaSans(
+              duration: Duration(seconds: 2),
+              backgroundColor: AppColors.deepRed,
+            ),
+          );
+        }
+      },
+      builder: (context, state) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Email",
+              style: GoogleFonts.plusJakartaSans(
+                textStyle: TextStyle(
+                  fontSize: 14,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 4,
+            ),
+            TextField(
+              keyboardType: TextInputType.emailAddress,
+              autocorrect: false,
+              controller: _emailController,
+              focusNode: _emailFocus,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                hintText: 'Email Address',
+                errorText: _emailError,
+                errorStyle: TextStyle(fontSize: 10),
+                prefixIcon: Icon(Icons.email_rounded),
+                hintStyle: GoogleFonts.plusJakartaSans(
                   textStyle: TextStyle(
                     fontSize: 14,
                   ),
                 ),
               ),
-              SizedBox(
-                height: 4,
-              ),
-              TextField(
-                keyboardType: TextInputType.emailAddress,
-                autocorrect: false,
-                controller: _emailController,
-                focusNode: _emailFocus,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  hintText: 'Email Address',
-                  errorText: _emailError,
-                  errorStyle: TextStyle(fontSize: 10),
-                  prefixIcon: Icon(Icons.email_rounded),
-                  hintStyle: GoogleFonts.plusJakartaSans(
-                    textStyle: TextStyle(
-                      fontSize: 14,
-                    ),
-                  ),
+            ),
+            SizedBox(
+              height: 16,
+            ),
+            Text(
+              "Password",
+              style: GoogleFonts.plusJakartaSans(
+                textStyle: TextStyle(
+                  fontSize: 14,
                 ),
               ),
-              SizedBox(
-                height: 16,
-              ),
-              Text(
-                "Password",
-                style: GoogleFonts.plusJakartaSans(
-                  textStyle: TextStyle(
-                    fontSize: 14,
-                  ),
+            ),
+            SizedBox(
+              height: 4,
+            ),
+            TextField(
+              controller: _passwordController,
+              obscureText: !_isPasswordVisible,
+              focusNode: _passwordFocus,
+              textInputAction: TextInputAction.done,
+              onSubmitted: (_) => validateAndSubmit(context),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
                 ),
-              ),
-              SizedBox(
-                height: 4,
-              ),
-              TextField(
-                controller: _passwordController,
-                obscureText: !_isPasswordVisible,
-                focusNode: _passwordFocus,
-                textInputAction: TextInputAction.done,
-                onSubmitted: (_) => validateAndSubmit(context),
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  hintText: 'Password',
-                  errorText: _passwordError,
-                  errorStyle: TextStyle(fontSize: 10),
-                  prefixIcon: Icon(Icons.key_rounded),
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        _isPasswordVisible = !_isPasswordVisible;
-                      });
-                    },
-                    icon: Icon(
-                      _isPasswordVisible
-                          ? Icons.visibility_rounded
-                          : Icons.visibility_off_rounded,
-                    ),
-                  ),
-                  hintStyle: GoogleFonts.plusJakartaSans(
-                    textStyle: TextStyle(
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 4,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  InkWell(
-                    onTap: () {},
-                    child: Text(
-                      "Forgot password",
-                      style: GoogleFonts.plusJakartaSans(
-                        textStyle: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.deepRed,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 32,
-              ),
-              if (state is AuthLoading) ...[
-                Center(
-                  child: CircularProgressIndicator(
-                    color: AppColors.deepRed,
-                  ),
-                )
-              ] else ...[
-                PrimaryButton(
-                  text: "Sign In",
+                hintText: 'Password',
+                errorText: _passwordError,
+                errorStyle: TextStyle(fontSize: 10),
+                prefixIcon: Icon(Icons.key_rounded),
+                suffixIcon: IconButton(
                   onPressed: () {
-                    if (state is! AuthLoading) {
-                      validateAndSubmit(context);
-                    }
+                    setState(() {
+                      _isPasswordVisible = !_isPasswordVisible;
+                    });
                   },
-                  backgroundColor: AppColors.deepRed,
-                  textColor: Colors.white,
-                  width: double.infinity,
+                  icon: Icon(
+                    _isPasswordVisible
+                        ? Icons.visibility_rounded
+                        : Icons.visibility_off_rounded,
+                  ),
                 ),
-              ],
-              SizedBox(
-                height: 12,
+                hintStyle: GoogleFonts.plusJakartaSans(
+                  textStyle: TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Don't have an account? ",
+            ),
+            SizedBox(
+              height: 4,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                InkWell(
+                  onTap: () {},
+                  child: Text(
+                    "Forgot password",
                     style: GoogleFonts.plusJakartaSans(
                       textStyle: TextStyle(
                         fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.deepRed,
                       ),
                     ),
                   ),
-                  InkWell(
-                    onTap: () {
-                      context.push('/register');
-                    },
-                    child: Text(
-                      "Sign up",
-                      style: GoogleFonts.plusJakartaSans(
-                        textStyle: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.deepRed,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 32,
+            ),
+            if (state is AuthLoading) ...[
+              Center(
+                child: CircularProgressIndicator(
+                  color: AppColors.deepRed,
+                ),
               )
+            ] else ...[
+              PrimaryButton(
+                text: "Sign In",
+                onPressed: () {
+                  if (state is! AuthLoading) {
+                    validateAndSubmit(context);
+                  }
+                },
+                backgroundColor: AppColors.deepRed,
+                textColor: Colors.white,
+                width: double.infinity,
+              ),
             ],
-          );
-        },
-      ),
+            SizedBox(
+              height: 12,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Don't have an account? ",
+                  style: GoogleFonts.plusJakartaSans(
+                    textStyle: TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    context.push('/register');
+                  },
+                  child: Text(
+                    "Sign up",
+                    style: GoogleFonts.plusJakartaSans(
+                      textStyle: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.deepRed,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            )
+          ],
+        );
+      },
     );
   }
 

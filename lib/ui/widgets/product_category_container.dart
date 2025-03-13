@@ -1,12 +1,13 @@
 import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lovify_android/configs/app_colors.dart';
 
-Stack vendorCategoryContainer({
-  required String text,
-  required String imagePath,
+Stack productCategoryContainer({
+  String? text,
+  String? imagePath,
 }) {
   return Stack(
     children: [
@@ -30,16 +31,33 @@ Stack vendorCategoryContainer({
                       borderRadius: BorderRadius.circular(16),
                       child: ImageFiltered(
                         imageFilter: ImageFilter.blur(sigmaX: 1.5, sigmaY: 1.5),
-                        child: Image.asset(
-                          imagePath,
-                          fit: BoxFit.cover,
-                        ),
+                        child: imagePath == null
+                        ? Image.asset(
+                            'assets/images/wedding.png',
+                            scale: 3,
+                          )
+                        : CachedNetworkImage(
+                            imageUrl: imagePath,
+                            progressIndicatorBuilder:
+                                (context, url, progress) => Center(
+                              child: CircularProgressIndicator(
+                                value: progress.progress,
+                                color: AppColors.deepRed,
+                              ),
+                            ),
+                            errorWidget: (context, url, error) => Center(
+                              child: Icon(
+                                Icons.error,
+                                color: AppColors.deepRed,
+                              ),
+                            ),
+                          ),
                       ),
                     ),
                     Positioned.fill(
                       child: Center(
                         child: Text(
-                          text,
+                          text ?? 'N/A',
                           style: GoogleFonts.plusJakartaSans(
                             textStyle: TextStyle(
                               fontSize: 16, // Bisa disesuaikan

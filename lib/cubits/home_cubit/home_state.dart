@@ -30,3 +30,21 @@ final class CategoriesError extends HomeState {
   @override
   List<Object> get props => [respond];
 }
+
+final class ProductsLoaded extends HomeState {
+  final List<ProductModel> products;
+
+  const ProductsLoaded({required this.products});
+
+  @override
+  List<Object> get props => [products];
+}
+
+final class ProductsError extends HomeState {
+  final ProductsRespondModel respond;
+
+  const ProductsError({required this.respond});
+
+  @override
+  List<Object> get props => [respond];
+}

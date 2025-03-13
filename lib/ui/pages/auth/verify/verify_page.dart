@@ -94,7 +94,8 @@ class _VerifyPageState extends State<VerifyPage> {
                   child: Container(
                     decoration: BoxDecoration(boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.2), // Shadow color
+                        color:
+                            Colors.black.withValues(alpha: 0.2), // Shadow color
                         spreadRadius: 1, // Spread of the shadow
                         blurRadius: 5, // Blur effect
                         offset: Offset(3, 3), // X & Y axis shadow position
@@ -114,7 +115,8 @@ class _VerifyPageState extends State<VerifyPage> {
                   child: Container(
                     decoration: BoxDecoration(boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.2), // Shadow color
+                        color:
+                            Colors.black.withValues(alpha: 0.2), // Shadow color
                         spreadRadius: 1, // Spread of the shadow
                         blurRadius: 5, // Blur effect
                         offset: Offset(3, 3), // X & Y axis shadow position

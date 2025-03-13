@@ -135,7 +135,7 @@ class ApiHelper {
   }
 
   // Transaction
-  // There is 3 payment type down_payment, remaining_payment, full_payment
+  // Payments type: down_payment, remaining_payment, full_payment.
   static Future storeTransaction({
     required String planningId,
     required String paymentType,

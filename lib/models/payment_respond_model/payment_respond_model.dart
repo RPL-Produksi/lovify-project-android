@@ -15,7 +15,8 @@ class PaymentRespondModel {
       message: data['message'] as String?,
       data: data['data'] == null
           ? null
-          : PaymentTransactionModel.fromMap(data['data'] as Map<String, dynamic>),
+          : PaymentTransactionModel.fromMap(
+              data['data'] as Map<String, dynamic>),
     );
   }
 

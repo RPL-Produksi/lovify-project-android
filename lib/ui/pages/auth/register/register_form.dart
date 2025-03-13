@@ -59,310 +59,303 @@ class _RegisterFormState extends State<RegisterForm> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthCubit(),
-      child: BlocConsumer<AuthCubit, AuthState>(
-        listener: (context, state) {
-          if (state is RegisterSuccess) {
-            context.go('/home');
-          }
-          if (state is RegisterError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  state.respond.message.toString(),
-                  textAlign: TextAlign.center,
-                ),
-                duration: Duration(seconds: 2),
-                backgroundColor: AppColors.deepRed,
+    return BlocConsumer<AuthCubit, AuthState>(
+      listener: (context, state) {
+        if (state is RegisterSuccess) {
+          context.go('/home');
+        }
+        if (state is RegisterError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                state.respond.message.toString(),
+                textAlign: TextAlign.center,
               ),
-            );
-          }
-        },
-        builder: (context, state) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Full Name",
-                style: GoogleFonts.plusJakartaSans(
+              duration: Duration(seconds: 2),
+              backgroundColor: AppColors.deepRed,
+            ),
+          );
+        }
+      },
+      builder: (context, state) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Full Name",
+              style: GoogleFonts.plusJakartaSans(
+                textStyle: TextStyle(
+                  color: AppColors.deepRed,
+                  fontSize: 14,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 4,
+            ),
+            TextField(
+              controller: _fullNameController,
+              focusNode: _fullNameFocus,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                hintText: 'Full Name',
+                errorText: _fullNameError,
+                prefixIcon: Icon(Icons.person),
+                hintStyle: GoogleFonts.plusJakartaSans(
                   textStyle: TextStyle(
-                    color: AppColors.deepRed,
                     fontSize: 14,
                   ),
                 ),
               ),
-              SizedBox(
-                height: 4,
-              ),
-              TextField(
-                controller: _fullNameController,
-                focusNode: _fullNameFocus,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  hintText: 'Full Name',
-                  errorText: _fullNameError,
-                  prefixIcon: Icon(Icons.person),
-                  hintStyle: GoogleFonts.plusJakartaSans(
-                    textStyle: TextStyle(
-                      fontSize: 14,
-                    ),
-                  ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              "Username",
+              style: GoogleFonts.plusJakartaSans(
+                textStyle: TextStyle(
+                  color: AppColors.deepRed,
+                  fontSize: 14,
                 ),
               ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "Username",
-                style: GoogleFonts.plusJakartaSans(
+            ),
+            SizedBox(
+              height: 4,
+            ),
+            TextField(
+              controller: _usernameController,
+              focusNode: _usernameFocus,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                hintText: 'Username',
+                errorText: _usernameError,
+                prefixIcon: Icon(Icons.account_circle_rounded),
+                hintStyle: GoogleFonts.plusJakartaSans(
                   textStyle: TextStyle(
-                    color: AppColors.deepRed,
                     fontSize: 14,
                   ),
                 ),
               ),
-              SizedBox(
-                height: 4,
-              ),
-              TextField(
-                controller: _usernameController,
-                focusNode: _usernameFocus,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  hintText: 'Username',
-                  errorText: _usernameError,
-                  prefixIcon: Icon(Icons.account_circle_rounded),
-                  hintStyle: GoogleFonts.plusJakartaSans(
-                    textStyle: TextStyle(
-                      fontSize: 14,
-                    ),
-                  ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              "Phone Number",
+              style: GoogleFonts.plusJakartaSans(
+                textStyle: TextStyle(
+                  color: AppColors.deepRed,
+                  fontSize: 14,
                 ),
               ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "Phone Number",
-                style: GoogleFonts.plusJakartaSans(
-                  textStyle: TextStyle(
-                    color: AppColors.deepRed,
-                    fontSize: 14,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 4,
-              ),
-              TextField(
-                controller: _phoneController,
-                focusNode: _phoneFocus,
-                keyboardType: TextInputType.phone,
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  hintText: 'Phone Number',
-                  prefixIcon: Icon(
-                    Icons.phone
-                  ),
-                  errorText: _phoneError,
-                  hintStyle: GoogleFonts.plusJakartaSans(
-                    textStyle: TextStyle(
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "Email",
-                style: GoogleFonts.plusJakartaSans(
-                  textStyle: TextStyle(
-                    color: AppColors.deepRed,
-                    fontSize: 14,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 4,
-              ),
-              TextField(
-                controller: _emailController,
-                focusNode: _emailFocus,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  hintText: 'Email',
-                  prefixIcon: Icon(
-                    Icons.mail
-                  ),
-                  errorText: _emailError,
-                  hintStyle: GoogleFonts.plusJakartaSans(
-                    textStyle: TextStyle(
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "Password",
-                style: GoogleFonts.plusJakartaSans(
-                  textStyle: TextStyle(
-                    color: AppColors.deepRed,
-                    fontSize: 14,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 4,
-              ),
-              TextField(
-                controller: _passwordController,
-                focusNode: _passwordFocus,
-                obscureText: !_isPasswordVisible,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  hintText: 'Password',
-                  errorText: _passwordError,
-                  prefixIcon: Icon(Icons.key_rounded),
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        _isPasswordVisible = !_isPasswordVisible;
-                      });
-                    },
-                    icon: Icon(
-                      _isPasswordVisible
-                          ? Icons.visibility_rounded
-                          : Icons.visibility_off_rounded,
-                    ),
-                  ),
-                  hintStyle: GoogleFonts.plusJakartaSans(
-                    textStyle: TextStyle(
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "Password Confirmation",
-                style: GoogleFonts.plusJakartaSans(
-                  textStyle: TextStyle(
-                    color: AppColors.deepRed,
-                    fontSize: 14,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 4,
-              ),
-              TextField(
-                controller: _passwordConfirmController,
-                focusNode: _passwordConfirmFocus,
-                obscureText: !_isPasswordVisible,
-                textInputAction: TextInputAction.done,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  hintText: 'Password Confirmation',
-                  errorText: _passwordConfirmError,
-                  prefixIcon: Icon(Icons.key_rounded),
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        _isPasswordVisible = !_isPasswordVisible;
-                      });
-                    },
-                    icon: Icon(
-                      _isPasswordVisible
-                          ? Icons.visibility_rounded
-                          : Icons.visibility_off_rounded,
-                    ),
-                  ),
-                  hintStyle: GoogleFonts.plusJakartaSans(
-                    textStyle: TextStyle(
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 32,
-              ),
-              if (state is AuthLoading) ...[
-                Center(
-                  child: CircularProgressIndicator(
-                    color: AppColors.deepRed,
-                  ),
-                )
-              ] else ...[
-                PrimaryButton(
-                  text: "Sign Up",
-                  onPressed: () {
-                    validateAndSubmit(context);
-                  },
-                  backgroundColor: AppColors.deepRed,
-                  textColor: Colors.white,
-                  width: double.infinity,
-                ),
+            ),
+            SizedBox(
+              height: 4,
+            ),
+            TextField(
+              controller: _phoneController,
+              focusNode: _phoneFocus,
+              keyboardType: TextInputType.phone,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
               ],
-              SizedBox(
-                height: 12,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                hintText: 'Phone Number',
+                prefixIcon: Icon(Icons.phone),
+                errorText: _phoneError,
+                hintStyle: GoogleFonts.plusJakartaSans(
+                  textStyle: TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Already have an account? ",
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              "Email",
+              style: GoogleFonts.plusJakartaSans(
+                textStyle: TextStyle(
+                  color: AppColors.deepRed,
+                  fontSize: 14,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 4,
+            ),
+            TextField(
+              controller: _emailController,
+              focusNode: _emailFocus,
+              keyboardType: TextInputType.emailAddress,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                hintText: 'Email',
+                prefixIcon: Icon(Icons.mail),
+                errorText: _emailError,
+                hintStyle: GoogleFonts.plusJakartaSans(
+                  textStyle: TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              "Password",
+              style: GoogleFonts.plusJakartaSans(
+                textStyle: TextStyle(
+                  color: AppColors.deepRed,
+                  fontSize: 14,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 4,
+            ),
+            TextField(
+              controller: _passwordController,
+              focusNode: _passwordFocus,
+              obscureText: !_isPasswordVisible,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                hintText: 'Password',
+                errorText: _passwordError,
+                prefixIcon: Icon(Icons.key_rounded),
+                suffixIcon: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      _isPasswordVisible = !_isPasswordVisible;
+                    });
+                  },
+                  icon: Icon(
+                    _isPasswordVisible
+                        ? Icons.visibility_rounded
+                        : Icons.visibility_off_rounded,
+                  ),
+                ),
+                hintStyle: GoogleFonts.plusJakartaSans(
+                  textStyle: TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              "Password Confirmation",
+              style: GoogleFonts.plusJakartaSans(
+                textStyle: TextStyle(
+                  color: AppColors.deepRed,
+                  fontSize: 14,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 4,
+            ),
+            TextField(
+              controller: _passwordConfirmController,
+              focusNode: _passwordConfirmFocus,
+              obscureText: !_isPasswordVisible,
+              textInputAction: TextInputAction.done,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                hintText: 'Password Confirmation',
+                errorText: _passwordConfirmError,
+                prefixIcon: Icon(Icons.key_rounded),
+                suffixIcon: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      _isPasswordVisible = !_isPasswordVisible;
+                    });
+                  },
+                  icon: Icon(
+                    _isPasswordVisible
+                        ? Icons.visibility_rounded
+                        : Icons.visibility_off_rounded,
+                  ),
+                ),
+                hintStyle: GoogleFonts.plusJakartaSans(
+                  textStyle: TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 32,
+            ),
+            if (state is AuthLoading) ...[
+              Center(
+                child: CircularProgressIndicator(
+                  color: AppColors.deepRed,
+                ),
+              )
+            ] else ...[
+              PrimaryButton(
+                text: "Sign Up",
+                onPressed: () {
+                  validateAndSubmit(context);
+                },
+                backgroundColor: AppColors.deepRed,
+                textColor: Colors.white,
+                width: double.infinity,
+              ),
+            ],
+            SizedBox(
+              height: 12,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Already have an account? ",
+                  style: GoogleFonts.plusJakartaSans(
+                    textStyle: TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    context.pop();
+                  },
+                  child: Text(
+                    "Sign In",
                     style: GoogleFonts.plusJakartaSans(
                       textStyle: TextStyle(
                         fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xFF67191F),
                       ),
                     ),
                   ),
-                  InkWell(
-                    onTap: () {
-                      context.pop();
-                    },
-                    child: Text(
-                      "Sign In",
-                      style: GoogleFonts.plusJakartaSans(
-                        textStyle: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xFF67191F),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ],
-          );
-        },
-      ),
+                )
+              ],
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -370,7 +363,7 @@ class _RegisterFormState extends State<RegisterForm> {
     setState(() {
       _fullNameError =
           _fullNameController.text.isEmpty ? "Full name is required" : null;
-          _fullNameController.text.isEmpty ? "Full name is required" : null;
+      _fullNameController.text.isEmpty ? "Full name is required" : null;
       _usernameError =
           _usernameController.text.isEmpty ? "Username is required" : null;
       _phoneError =

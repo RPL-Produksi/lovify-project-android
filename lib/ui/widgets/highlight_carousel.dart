@@ -13,11 +13,11 @@ class HighlightCarousel extends StatefulWidget {
 class _HighlightCarouselState extends State<HighlightCarousel> {
   int _currentPage = 0;
 
-  final CarouselSliderController _carouselSliderController = CarouselSliderController();
+  final CarouselSliderController _carouselSliderController =
+      CarouselSliderController();
 
   @override
   Widget build(BuildContext context) {
-  
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -76,4 +76,4 @@ class _HighlightCarouselState extends State<HighlightCarousel> {
       ],
     );
   }
-  }
+}

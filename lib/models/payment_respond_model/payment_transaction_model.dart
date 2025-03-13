@@ -25,7 +25,8 @@ class PaymentTransactionModel {
   ///
   /// Parses the string and returns the resulting Json object as [PaymentTransactionModel].
   factory PaymentTransactionModel.fromJson(String data) {
-    return PaymentTransactionModel.fromMap(json.decode(data) as Map<String, dynamic>);
+    return PaymentTransactionModel.fromMap(
+        json.decode(data) as Map<String, dynamic>);
   }
 
   /// `dart:convert`

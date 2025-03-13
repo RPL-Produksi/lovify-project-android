@@ -12,52 +12,53 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       //error di debug only
-      body: kReleaseMode ? KeyboardAvoider(
-        autoScroll: true,
-        child: _buildContent(),
-      ) : _buildContent(),
+      body: kReleaseMode
+          ? KeyboardAvoider(
+              autoScroll: true,
+              child: _buildContent(),
+            )
+          : _buildContent(),
     );
   }
 
   Padding _buildContent() {
     return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 32),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 70,
-            ),
-            Image.asset(
-              "assets/images/lovify-logo.png",
-              width: 100,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              "Sign Up to Make Account",
-              style: GoogleFonts.plusJakartaSans(
-                textStyle: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                ),
+      padding: const EdgeInsets.symmetric(horizontal: 32),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 70,
+          ),
+          Image.asset(
+            "assets/images/lovify-logo.png",
+            width: 100,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            "Sign Up to Make Account",
+            style: GoogleFonts.plusJakartaSans(
+              textStyle: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(
-              height: 20,
-            ),
-            RegisterForm(),
-            SizedBox(
-              height: 20,
-            ),
-          ],
-        ),
-      );
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          RegisterForm(),
+          SizedBox(
+            height: 20,
+          ),
+        ],
+      ),
+    );
   }
 }

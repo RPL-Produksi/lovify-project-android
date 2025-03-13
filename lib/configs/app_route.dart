@@ -55,9 +55,9 @@ class AppRoute {
           builder: (context, state) => const VerifySuccessPage(),
         ),
         GoRoute(
-            path: '/vendorDetail',
-            name: 'vendorDetail',
-            builder: (context, state) => const VendorDetailPage(),
-            ),
+          path: '/vendorDetail',
+          name: 'vendorDetail',
+          builder: (context, state) => const VendorDetailPage(),
+        ),
       ];
 }

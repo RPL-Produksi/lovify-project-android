@@ -22,7 +22,8 @@ class TransactionModel {
     this.planning,
   });
 
-  factory TransactionModel.fromMap(Map<String, dynamic> data) => TransactionModel(
+  factory TransactionModel.fromMap(Map<String, dynamic> data) =>
+      TransactionModel(
         id: data['id'] as String?,
         amount: data['amount'] as int?,
         paymentDate: data['payment_date'] == null

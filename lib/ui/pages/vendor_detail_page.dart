@@ -13,7 +13,7 @@ class VendorDetailPage extends StatefulWidget {
 }
 
 class _VendorDetailPageState extends State<VendorDetailPage> {
-  CarouselSliderController _carouselSliderController =
+  final CarouselSliderController _carouselSliderController =
       CarouselSliderController();
 
   int _currentPage = 0;

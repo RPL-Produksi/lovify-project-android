@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
+import 'package:lovify_android/models/products_respond_model/attachment.dart';
 
 class ProductModel extends Equatable {
   final String? id;
@@ -12,7 +13,7 @@ class ProductModel extends Equatable {
   final String? vendor;
   final String? location;
   final String? category;
-  final List<String>? attachments;
+  final List<dynamic>? attachments;
 
   const ProductModel({
     this.id,
@@ -37,7 +38,9 @@ class ProductModel extends Equatable {
         vendor: data['vendor'] as String?,
         location: data['location'] as String?,
         category: data['category'] as String?,
-        attachments: data['attachments'] as List<String>?,
+       attachments: (data['attachments'] as List<dynamic>?)
+            ?.map((e) => Attachment.fromMap(e as Map<String, dynamic>))
+            .toList(),
       );
 
   Map<String, dynamic> toMap() => {
@@ -50,7 +53,7 @@ class ProductModel extends Equatable {
         'vendor': vendor,
         'location': location,
         'category': category,
-        'attachments': attachments,
+        'attachments': attachments?.map((e) => e.toMap()).toList(),
       };
 
   /// `dart:convert`

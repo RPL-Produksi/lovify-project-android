@@ -6,38 +6,6 @@ class VendorCategoriesData {
   final List<VendorCategoryModel> vendorCategories = [
     VendorCategoryModel(
       id: 1,
-      name: 'Attire',
-      icon: Icon(
-        Icons.checkroom,
-        color: AppColors.whiteSmoke,
-      ),
-    ),
-    VendorCategoryModel(
-      id: 2,
-      name: 'Make Up',
-      icon: Icon(
-        Icons.brush,
-        color: AppColors.whiteSmoke,
-      ),
-    ),
-    VendorCategoryModel(
-      id: 3,
-      name: 'Hairdo',
-      icon: Icon(
-        Icons.content_cut,
-        color: AppColors.whiteSmoke,
-      ),
-    ),
-    VendorCategoryModel(
-      id: 4,
-      name: 'Catering',
-      icon: Icon(
-        Icons.restaurant,
-        color: AppColors.whiteSmoke,
-      ),
-    ),
-    VendorCategoryModel(
-      id: 5,
       name: 'Venue',
       icon: Icon(
         Icons.account_balance,
@@ -45,15 +13,39 @@ class VendorCategoriesData {
       ),
     ),
     VendorCategoryModel(
-      id: 6,
-      name: 'Decor',
+      id: 2,
+      name: 'MUA',
       icon: Icon(
-        Icons.photo,
+        Icons.people,
         color: AppColors.whiteSmoke,
       ),
     ),
     VendorCategoryModel(
-      id: 7,
+      id: 3,
+      name: 'Catering',
+      icon: Icon(
+        Icons.restaurant,
+        color: AppColors.whiteSmoke,
+      ),
+    ),
+    // VendorCategoryModel(
+    //   id: 4,
+    //   name: 'Photographer',
+    //   icon: Icon(
+    //     Icons.camera_alt,
+    //     color: AppColors.whiteSmoke,
+    //   ),
+    // ),
+    VendorCategoryModel(
+      id: 5,
+      name: 'Organize',
+      icon: Icon(
+        Icons.today,
+        color: AppColors.whiteSmoke,
+      ),
+    ),
+    VendorCategoryModel(
+      id: 6,
       name: 'View All',
       icon: Icon(
         Icons.arrow_forward_ios,
