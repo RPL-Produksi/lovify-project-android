@@ -5,6 +5,7 @@ import 'package:lovify_android/ui/pages/auth/verify/verify_page.dart';
 import 'package:lovify_android/ui/pages/auth/verify/verify_success_page.dart';
 import 'package:lovify_android/ui/pages/home_page.dart';
 import 'package:lovify_android/ui/pages/onboard_page.dart';
+import 'package:lovify_android/ui/pages/vendor_detail_page.dart';
 
 import '../ui/pages/launch_page.dart';
 
@@ -53,5 +54,10 @@ class AppRoute {
           name: 'verifySuccess',
           builder: (context, state) => const VerifySuccessPage(),
         ),
+        GoRoute(
+            path: '/vendorDetail',
+            name: 'vendorDetail',
+            builder: (context, state) => const VendorDetailPage(),
+            ),
       ];
 }
